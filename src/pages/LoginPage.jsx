@@ -24,7 +24,6 @@ export default function LoginPage() {
         token: response.tokenId,
       }));
 
-      console.log(userData);
       let fromPath = localStorage.getItem("fromUrl");
       localStorage.removeItem("fromUrl");
 
@@ -36,7 +35,7 @@ export default function LoginPage() {
     <div className="center-aligned">
       <div className="heading-text">Welcome to Todo Master</div>
       <GoogleLogin
-        clientId="578814648421-6kihuinbchgn9vm6t1g7e8l5j1s87iob.apps.googleusercontent.com"
+        clientId={process.env.REACT_APP_G_CLIENT_ID}
         buttonText="Login / Register"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}

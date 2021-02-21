@@ -8,7 +8,7 @@ export async function fetchNotes(jwt) {
         Authorization: jwt,
       },
     });
-    return res || {};
+    return res.data || {};
   } catch (err) {
     console.error(err);
     return {};
@@ -32,6 +32,20 @@ export async function createNote(note, jwt) {
 export async function updateNote(noteId, note, jwt) {
   try {
     const res = await axios.post(`${baseUrl}/update-note?id=${noteId}`, note, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    return res.data || {};
+  } catch (err) {
+    console.error(err);
+    return {};
+  }
+}
+
+export async function deleteNote(noteId, jwt) {
+  try {
+    const res = await axios.delete(`${baseUrl}/delete-note?id=${noteId}`, {
       headers: {
         Authorization: jwt,
       },

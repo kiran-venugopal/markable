@@ -26,10 +26,10 @@ const Notes = () => {
   useEffect(() => {
     async function getNotes() {
       const res = await fetchNotes(userData.token);
-      const data = res.data;
-      if (data.success) {
+
+      if (res.success) {
         const { layout, itemsWithLayout } = LayoutGenerator(
-          data.notes.reverse()
+          res.notes.reverse()
         );
         setNoteData((prev) => ({
           ...prev,
@@ -72,6 +72,11 @@ const Notes = () => {
           <span className="text">Add Note</span>
         </Button>
       </div>
+      {noteData.notes.length === 0 && (
+        <div style={{ textAlign: "center", margin: "50px 0" }}>
+          You don't have any notes.
+        </div>
+      )}
       <div>
         <ResponsiveGridLayout
           layouts={layouts}

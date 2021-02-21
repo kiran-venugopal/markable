@@ -13,6 +13,10 @@ import {
 } from "../../utils/styles";
 import Modal from "react-modal";
 import useLocalStorage from "react-use-localstorage";
+import { deleteNote } from "../../APIs/note";
+import { ToastsStore } from "react-toasts";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { notesState, userState } from "../../recoil/atoms";
 
 const customStyles = {
   content: {
@@ -31,8 +35,9 @@ const customStyles = {
 
 const NoteItem = ({ note }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [notesInString, setNotes] = useLocalStorage("notes");
+  const setNoteData = useSetRecoilState(notesState);
   const history = useHistory();
+  const [userData] = useRecoilState(userState);
 
   console.log({ note });
   function afterOpenModal() {
@@ -51,15 +56,21 @@ const NoteItem = ({ note }) => {
     history.push(`edit-note/${note._id}`);
   };
 
-  const deleteNote = (e) => {
-    const allNotes = JSON.parse(notesInString);
-    const newNotes = allNotes.filter((n) => n._id !== note._id);
-    setNotes(JSON.stringify(newNotes));
-    stopPropagation(e);
+  const deleteN = async (e) => {
+    const res = await deleteNote(note._id, userData.token);
+    if (res.success) {
+      ToastsStore.success("Note deleted!", null, "toast-element");
+      setNoteData((prev) => ({
+        ...prev,
+        reload: true,
+      }));
+      return;
+    }
+    ToastsStore.error(res.error, null, "toast-element");
   };
 
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <AlignToRight>
         <IconButton onClick={goToEditNote}>
           <FaRegEdit />
@@ -79,6 +90,7 @@ const NoteItem = ({ note }) => {
         value={note.content}
         readOnly={true}
         theme="bubble"
+        style={{ height: "90%" }}
       />
 
       <Modal
@@ -100,7 +112,7 @@ const NoteItem = ({ note }) => {
           </ModalQuillWrapper>
           <ModalActions>
             <Button onClick={() => setIsOpen(false)}>Cancel</Button>
-            <Button onClick={deleteNote} mode="danger">
+            <Button onClick={deleteN} mode="danger">
               Delete
             </Button>
           </ModalActions>
