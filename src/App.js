@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Switch } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import { useRecoilState } from "recoil";
+import { userState } from "./recoil/atoms";
+import GuardedRoute from "./utils/RouteGuard";
+import loginPage from "./pages/LoginPage";
+import {
+  ToastsContainer,
+  ToastsContainerPosition,
+  ToastsStore,
+} from "react-toasts";
 
 function App() {
+  const [userData] = useRecoilState(userState);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Switch>
+          <GuardedRoute
+            onlyUnauthorized={true}
+            path="/login"
+            component={loginPage}
+            exact
+          />
+          <GuardedRoute
+            path="/"
+            component={HomePage}
+            auth={userData.isLoggedIn}
+          />
+        </Switch>
+      </BrowserRouter>
+      <ToastsContainer
+        position={ToastsContainerPosition.BOTTOM_CENTER}
+        store={ToastsStore}
+      />
     </div>
   );
 }
