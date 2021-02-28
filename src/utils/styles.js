@@ -83,6 +83,7 @@ export const IconButton = styled.button`
   margin: 3px;
   border-radius: 4px;
   display: flex;
+  cursor: pointer;
 `;
 
 export const AlignToRight = styled.div`

@@ -11,7 +11,7 @@ import { NoteContainer } from "../../utils/styles";
 import { LayoutGenerator } from "../../utils/functions";
 import { useRecoilState } from "recoil";
 import { notesState, userState } from "../../recoil/atoms";
-import { fetchNotes } from "../../APIs/note";
+import { fetchNotes, updateLayouts } from "../../APIs/note";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -60,6 +60,10 @@ const Notes = () => {
     return <div>Loading..</div>;
   }
 
+  function onLayoutChange(layouts) {
+    updateLayouts(layouts, userData.token);
+  }
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -85,6 +89,7 @@ const Notes = () => {
           width={1200}
           draggableHandle=".widget"
           margin={[20, 20]}
+          onLayoutChange={onLayoutChange}
         >
           {noteNodes}
         </ResponsiveGridLayout>

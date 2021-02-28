@@ -15,7 +15,8 @@ export const LayoutGenerator = (initialItems) => {
   let itemsWithLayout = [];
 
   const layout = initialItems.map((item) => {
-    if (item.layout && item.layout.x) {
+    console.log({ item });
+    if (item.layout && Object.keys(item.layout).length > 0) {
       if (no_of_grids + initialGridWidth <= 12) no_of_grids += initialGridWidth;
       else {
         height += 2;

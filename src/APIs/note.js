@@ -43,6 +43,20 @@ export async function updateNote(noteId, note, jwt) {
   }
 }
 
+export async function updateLayouts(layouts, jwt) {
+  try {
+    const res = await axios.post(`${baseUrl}/update-layouts`, layouts, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    return res.data || {};
+  } catch (err) {
+    console.error(err);
+    return {};
+  }
+}
+
 export async function deleteNote(noteId, jwt) {
   try {
     const res = await axios.delete(`${baseUrl}/delete-note?id=${noteId}`, {

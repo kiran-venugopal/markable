@@ -73,7 +73,7 @@ const NoteItem = ({ note }) => {
     <div style={{ height: "100%" }}>
       <AlignToRight>
         <IconButton onClick={goToEditNote}>
-          <FaRegEdit />
+          <FaRegEdit size="20px" />
         </IconButton>
         <IconButton
           onClick={(e) => {
@@ -81,7 +81,7 @@ const NoteItem = ({ note }) => {
             stopPropagation(e);
           }}
         >
-          <FaRegTrashAlt />
+          <FaRegTrashAlt size="20px" />
         </IconButton>
       </AlignToRight>
       <ReactQuill

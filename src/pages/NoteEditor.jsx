@@ -13,18 +13,28 @@ import { notesState, userState } from "../recoil/atoms";
 const NoteEditor = () => {
   const [note, setNote] = useState("");
   const { noteId } = useParams();
-  console.log({ noteId });
-  //const [isCreated, setIsCreated] = useState(noteId);
+  const [isCreated, setIsCreated] = useState(noteId);
   //const [allNotesInString, setAllNotes] = useLocalStorage("notes");
   const [userData] = useRecoilState(userState);
   const [noteData] = useRecoilState(notesState);
 
   const history = useHistory();
 
+  const updateOrCreate = () => {
+    if (note.trim()) {
+      if (isCreated) {
+        update(false);
+        return;
+      }
+      create(false);
+    }
+    return;
+  };
+
   useEffect(() => {
     if (noteId) {
       let note = noteData.notes.find((note) => note._id === noteId);
-      console.log({ note });
+
       if (!note) {
         history.push("/");
         return;
@@ -33,11 +43,17 @@ const NoteEditor = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(updateOrCreate, 10000);
+
+    return () => clearInterval(interval);
+  }, [note]);
+
   const onNoteChange = (e) => {
     setNote(e);
   };
 
-  async function create() {
+  async function create(showToast = true) {
     if (note.trim() !== "") {
       let req = {
         content: note,
@@ -45,25 +61,32 @@ const NoteEditor = () => {
       };
       const res = await createNote(req, userData.token);
       if (res.success) {
-        ToastsStore.success("Note created!", null, "toast-element");
+        if (showToast)
+          ToastsStore.success("Note created!", null, "toast-element");
+        setIsCreated(res.id);
         return;
       }
-      ToastsStore.error(res.error, null, "toast-element");
+      if (showToast) ToastsStore.error(res.error, null, "toast-element");
       return;
     }
-    ToastsStore.error("Note can't be empty", null, "toast-element");
+    if (showToast)
+      ToastsStore.error("Note can't be empty", null, "toast-element");
   }
 
-  async function update() {
+  async function update(showToast = true) {
+    if (!note.trim()) {
+      if (showToast) ToastsStore.success("Note can't be empty!");
+    }
     let noteUpdated = {
       content: note,
     };
-    const res = await updateNote(noteId, noteUpdated, userData.token);
+    const res = await updateNote(isCreated, noteUpdated, userData.token);
     if (res.success) {
-      ToastsStore.success("Note updated!", null, "toast-element");
+      if (showToast)
+        ToastsStore.success("Note updated!", null, "toast-element");
       return;
     }
-    ToastsStore.error(res.error, null, "toast-element");
+    if (showToast) ToastsStore.error(res.error, null, "toast-element");
   }
 
   return (
@@ -77,7 +100,7 @@ const NoteEditor = () => {
         onChange={onNoteChange}
         style={{ height: "350px" }}
       />
-      {noteId ? (
+      {isCreated ? (
         <Button className="button" onClick={update}>
           <FaEdit className="icon" />
           <span className="text">Update Note</span>
