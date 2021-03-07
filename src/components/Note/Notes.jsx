@@ -12,6 +12,7 @@ import { LayoutGenerator } from "../../utils/functions";
 import { useRecoilState } from "recoil";
 import { notesState, userState } from "../../recoil/atoms";
 import { fetchNotes, updateLayouts } from "../../APIs/note";
+import ProfileButton from "../ProfileButton/ProfileButton";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 

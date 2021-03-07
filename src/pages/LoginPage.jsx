@@ -18,8 +18,8 @@ export default function LoginPage() {
     if (response && response.profileObj) {
       await setUserData((prev) => ({
         ...prev,
+        ...response.profileObj,
         isLoggedIn: true,
-        name: response.profileObj.name,
         photo: response.profileObj.imageUrl,
         token: response.tokenId,
       }));
