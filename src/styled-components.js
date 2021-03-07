@@ -21,6 +21,7 @@ export const NavbarWrapper = styled.div`
     button {
       padding-bottom: 8px;
       letter-spacing: 2px;
+      background: transparent;
     }
     .active {
       border-bottom: 4px solid skyblue;
