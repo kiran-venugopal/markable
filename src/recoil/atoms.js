@@ -7,6 +7,7 @@ export const userState = atom({
     name: "",
     photo: "",
     token: "",
+    email: "",
   },
 });
 

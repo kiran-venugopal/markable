@@ -1,34 +1,50 @@
-import React from "react";
-import { GoogleLogout } from "react-google-login";
-import { FaCheckSquare, FaFile } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaBars } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
-import { AppHeader, NavbarWrapper, PrimaryBtn } from "../../styled-components";
-import { Button } from "../../utils/styles";
+import { AppHeader, NavbarWrapper, NavLink } from "../../styled-components";
+import Drawer from "./Drawer/Drawer";
+import Menu from "./Menu/Menu";
 
 function Navbar() {
   const history = useHistory();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
     <NavbarWrapper>
-      <AppHeader onClick={() => history.push("/")}>Todo Master</AppHeader>
+      <div className="app-header">
+        <AppHeader onClick={() => history.push("/")}>Todo Master</AppHeader>
+        <FaBars
+          onClick={() => setIsDrawerOpen((prev) => !prev)}
+          className="menu"
+        />
+
+        <Drawer
+          width="400px"
+          onClose={() => setIsDrawerOpen(false)}
+          isOpen={isDrawerOpen}
+        >
+          <Menu />
+        </Drawer>
+      </div>
       <div className="actions">
-        <Button
+        <NavLink
+          className={`${history.location.pathname === "/todos" && "active"}`}
           onClick={() => history.push("/todos")}
-          style={{ margin: "4px", fontSize: "10px" }}
         >
-          <FaCheckSquare className="icon" />
           <span>Todos</span>
-        </Button>
+        </NavLink>
 
-        <Button
+        <NavLink
+          className={`${
+            ["/notes", "/", "/add-note"].includes(history.location.pathname) &&
+            "active"
+          }`}
           onClick={() => history.push("/notes")}
-          style={{ margin: "4px 10px 4px 4px", fontSize: "10px" }}
         >
-          <FaFile className="icon" />
           <span>Notes</span>
-        </Button>
+        </NavLink>
 
-        <GoogleLogout
+        {/* <GoogleLogout
           clientId={process.env.REACT_APP_G_CLIENT_ID}
           buttonText="Login / Register"
           onLogoutSuccess={() => history.push("/login")}
@@ -37,7 +53,7 @@ function Navbar() {
               Logout
             </PrimaryBtn>
           )}
-        />
+        /> */}
       </div>
     </NavbarWrapper>
   );

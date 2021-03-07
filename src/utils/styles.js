@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const StyledAppContainer = styled.div`
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   cursor: pointer;
 
   html,
@@ -33,9 +32,9 @@ export const Button = styled.button`
   margin: 10px;
   color: ${(props) => (props.mode === "danger" ? "white" : "#484848")};
   outline: none;
-  background: #ff3e7f;
+  background: #ff4886;
   font-weight: 600;
-  border-radius: 15px;
+  border-radius: 3px;
   padding: 5px 10px;
   color: white;
   box-shadow: 2px 3px 6px 1px #00000036;
@@ -61,7 +60,7 @@ export const NoteEditorContainer = styled.div`
   .button {
     text-align: right;
     margin-left: auto;
-    margin-top: 20px;
+    margin-top: 40px;
   }
 `;
 
@@ -100,7 +99,6 @@ export const ModalQuillWrapper = styled.div`
 
 export const ModalDangerTitle = styled.div`
   font-size: 18px;
-  font-family: sans-serif;
   text-align: center;
   color: darkred;
   font-weight: 500;

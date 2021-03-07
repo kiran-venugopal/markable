@@ -21,6 +21,7 @@ const NoteEditor = () => {
   const history = useHistory();
 
   const updateOrCreate = () => {
+    console.log({ isCreated });
     if (note.trim()) {
       if (isCreated) {
         update(false);
@@ -47,7 +48,7 @@ const NoteEditor = () => {
     const interval = setInterval(updateOrCreate, 10000);
 
     return () => clearInterval(interval);
-  }, [note]);
+  }, [note, isCreated]);
 
   const onNoteChange = (e) => {
     setNote(e);
