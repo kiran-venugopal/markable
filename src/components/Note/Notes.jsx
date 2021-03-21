@@ -34,7 +34,7 @@ const Notes = () => {
         );
         setNoteData((prev) => ({
           ...prev,
-          notes: itemsWithLayout,
+          notes: itemsWithLayout || [],
           reload: false,
         }));
 

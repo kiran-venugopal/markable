@@ -34,15 +34,10 @@ const customStyles = {
 };
 
 const NoteItem = ({ note }) => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsOpen] = useState(false);
   const setNoteData = useSetRecoilState(notesState);
   const history = useHistory();
   const [userData] = useRecoilState(userState);
-
-  console.log({ note });
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
 
   function closeModal() {
     setIsOpen(false);
@@ -94,11 +89,13 @@ const NoteItem = ({ note }) => {
       />
 
       <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
+        isOpen={isModalOpen}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
       >
         <div>
           <ModalDangerTitle> Are you sure to delete </ModalDangerTitle>
