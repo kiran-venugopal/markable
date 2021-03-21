@@ -39,6 +39,10 @@ export const Button = styled.button`
   color: white;
   box-shadow: 2px 3px 6px 1px #00000036;
 
+  :disabled {
+    background: #929292;
+  }
+
   :active {
     box-shadow: none;
   }

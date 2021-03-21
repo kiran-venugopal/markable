@@ -136,3 +136,99 @@ export const MenuWrapper = styled.div`
     }
   }
 `;
+
+export const SectionsWrapper = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px 10px;
+  font-size: 14px;
+  overflow-x: auto;
+
+  .section {
+    .header {
+      padding: 5px;
+      text-align: center;
+      color: white;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .todo-item {
+      background: white;
+      padding: 7px;
+      border-radius: 5px;
+      margin: 10px 0;
+      box-shadow: -2px 4px 4px #0000001f;
+      border: 1px solid;
+      cursor: grab;
+      .todo-header {
+        text-align: right;
+        color: grey;
+        margin-top: -5px;
+        span {
+          cursor: pointer;
+        }
+      }
+    }
+    padding: 10px;
+    width: 25vw;
+    min-width: 280px;
+    min-height: 500px;
+    overflow-y: auto;
+    max-height: 75vh;
+    margin-bottom: 30px;
+  }
+  .open {
+    background: #ff000036;
+    .todo-item {
+      border-color: #ff777c;
+    }
+    .header {
+      background: #ff777c;
+    }
+  }
+  .inprogress {
+    background: #2479d436;
+    .todo-item {
+      border-color: #83b9f9;
+    }
+    .header {
+      background: #83b9f9;
+    }
+  }
+  .done {
+    background: #0bef6833;
+    .todo-item {
+      border-color: #7dd69c;
+    }
+    .header {
+      background: #7dd69c;
+    }
+  }
+`;
+
+export const AddTodoWrapper = styled.div`
+  .header {
+    font-weight: 600;
+  }
+
+  .field {
+    margin: 20px 0px;
+    font-size: 13px;
+    input {
+      padding: 10px;
+      background: whitesmoke;
+      border: none;
+    }
+    textarea {
+      margin: 0px;
+      min-width: 645px;
+      min-height: 137px;
+      background: whitesmoke;
+      border: none;
+      padding: 10px;
+    }
+    .label {
+      margin: 5px 0;
+    }
+  }
+`;
