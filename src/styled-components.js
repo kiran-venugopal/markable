@@ -139,7 +139,6 @@ export const MenuWrapper = styled.div`
 
 export const SectionsWrapper = styled.div`
   display: flex;
-  justify-content: space-evenly;
   margin: 30px 10px;
   font-size: 14px;
   overflow-x: auto;
@@ -175,6 +174,7 @@ export const SectionsWrapper = styled.div`
     min-height: 500px;
     overflow-y: auto;
     max-height: 75vh;
+    margin: 0 auto;
     margin-bottom: 30px;
   }
   .open {
