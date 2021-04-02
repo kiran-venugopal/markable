@@ -8,7 +8,7 @@ import { todosState, userState } from "../../recoil/atoms";
 import { useEffect } from "react";
 import { Button } from "../../utils/styles";
 import { FaPlusSquare } from "react-icons/fa";
-import { fetchTodos } from "../../APIs/todo";
+import { fetchTodos, updateTodo } from "../../APIs/todo";
 import Modal from "react-modal";
 import { useState } from "react";
 import TodoEditor from "./TodoEditor";
@@ -46,7 +46,7 @@ function Todos() {
     }
   }, [isLoading]);
 
-  function onDrop(e, section) {
+  async function onDrop(e, section) {
     setTodos((prev) => {
       let todos = [...prev.todos].filter((t) => t._id !== e.todo._id);
       return {
@@ -60,6 +60,12 @@ function Todos() {
         ],
       };
     });
+    let todo = todos.find((t) => t._id === e.todo._id);
+    todo = {
+      ...todo,
+      status: section,
+    };
+    await updateTodo(e.todo._id, todo, userData.token);
   }
 
   function addTodo() {
@@ -75,6 +81,10 @@ function Todos() {
       ...prev,
       isLoading: true,
     }));
+    setIsAddTodoOpen(false);
+  }
+
+  function onClose() {
     setIsAddTodoOpen(false);
   }
 
@@ -95,7 +105,7 @@ function Todos() {
         shouldCloseOnOverlayClick={true}
         onRequestClose={closeModal}
       >
-        <TodoEditor onSuccess={onSuccess} />
+        <TodoEditor onSuccess={onSuccess} onClose={onClose} />
       </Modal>
       <SectionsWrapper>
         <TodosSection

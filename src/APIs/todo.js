@@ -42,3 +42,17 @@ export async function deleteTodo(todoId, jwt) {
     return {};
   }
 }
+
+export async function updateTodo(todoId, todo, jwt) {
+  try {
+    const res = await axios.post(`${baseUrl}/update-todo?id=${todoId}`, todo, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    return res.data || {};
+  } catch (err) {
+    console.error(err);
+    return {};
+  }
+}

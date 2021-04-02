@@ -13,7 +13,7 @@ const initialTodoContent = {
   status: "open",
 };
 
-function TodoEditor({ noteId = "", onSuccess = () => {} }) {
+function TodoEditor({ noteId = "", onSuccess = () => {}, onClose = () => {} }) {
   const [todos, setTodos] = useRecoilState(todosState);
   const [userData, setUserData] = useRecoilState(userState);
   const [todoContent, setTodoContent] = useState(initialTodoContent);
@@ -67,7 +67,9 @@ function TodoEditor({ noteId = "", onSuccess = () => {} }) {
           />
         </div>
         <ModalActions>
-          <Button type="button">Close</Button>
+          <Button type="button" onClick={onClose}>
+            Close
+          </Button>
           <Button disabled={isSending}>
             {isSending ? "Creating.." : "Create Todo"}
           </Button>

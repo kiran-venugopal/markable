@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import { FaEllipsisH } from "react-icons/fa";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { deleteTodo } from "../../APIs/todo";
+import { deleteTodo, updateTodo } from "../../APIs/todo";
 import { todosState, userState } from "../../recoil/atoms";
 import DropDownMenu from "./DropDownMenu/DropDownMenu";
 
@@ -29,6 +29,27 @@ function TodoItem({ todo }) {
     }));
   }
 
+  async function updateStatus(status) {
+    setTodos((prev) => {
+      let otherTodos = prev.todos.filter((t) => t._id !== todo._id);
+      return {
+        ...prev,
+        todos: [
+          ...otherTodos,
+          {
+            ...todo,
+            status,
+          },
+        ],
+      };
+    });
+    let todoItem = {
+      ...todo,
+      status: status,
+    };
+    await updateTodo(todo._id, todoItem, userData.token);
+  }
+
   return (
     <div className="todo-item" ref={drag}>
       <div className="todo-header">
@@ -37,13 +58,22 @@ function TodoItem({ todo }) {
         </span>
         <DropDownMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
           {todo.status !== "open" && (
-            <div className="menu-item">Mark as Open</div>
+            <div onClick={() => updateStatus("open")} className="menu-item">
+              Mark as Open
+            </div>
           )}
           {todo.status !== "inprogress" && (
-            <div className="menu-item">Mark as In Progress</div>
+            <div
+              onClick={() => updateStatus("inprogress")}
+              className="menu-item"
+            >
+              Mark as In Progress
+            </div>
           )}
           {todo.status !== "done" && (
-            <div className="menu-item">Mark as Done</div>
+            <div onClick={() => updateStatus("done")} className="menu-item">
+              Mark as Done
+            </div>
           )}
           <div className="menu-item" onClick={delTodo}>
             Delete
