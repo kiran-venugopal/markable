@@ -19,8 +19,6 @@ function TodoEditor({ noteId = "", onSuccess = () => {}, onClose = () => {} }) {
   const [todoContent, setTodoContent] = useState(initialTodoContent);
   const [isSending, setIsSending] = useState(false);
 
-  useEffect(() => {});
-
   const onInputChange = (e) => {
     setTodoContent((prev) => ({
       ...prev,

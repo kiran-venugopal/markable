@@ -1,18 +1,30 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { AppHeader, NavbarWrapper, NavLink } from "../../styled-components";
 import Drawer from "./Drawer/Drawer";
 import Menu from "./Menu/Menu";
+import { ReactComponent as Logo } from "../../icons/logo.svg";
 
 function Navbar() {
   const history = useHistory();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("notes");
+
+  useEffect(() => {
+    let pathname = history?.location.pathname;
+    if (pathname && pathname.includes("note")) {
+      setActiveTab("notes");
+    } else setActiveTab("todos");
+  }, [history.location.pathname]);
 
   return (
     <NavbarWrapper>
       <div className="app-header">
-        <AppHeader onClick={() => history.push("/")}>Todo Master</AppHeader>
+        <AppHeader onClick={() => history.push("/")}>
+          <Logo width={130} />
+        </AppHeader>
         <FaBars
           onClick={() => setIsDrawerOpen((prev) => !prev)}
           className="menu"
@@ -28,17 +40,14 @@ function Navbar() {
       </div>
       <div className="actions">
         <NavLink
-          className={`${history.location.pathname === "/todos" && "active"}`}
+          className={`${activeTab === "todos" ? "active" : ""}`}
           onClick={() => history.push("/todos")}
         >
           <span>Todos</span>
         </NavLink>
 
         <NavLink
-          className={`${
-            ["/notes", "/", "/add-note"].includes(history.location.pathname) &&
-            "active"
-          }`}
+          className={`${activeTab === "notes" ? "active" : ""}`}
           onClick={() => history.push("/notes")}
         >
           <span>Notes</span>

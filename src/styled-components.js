@@ -19,12 +19,12 @@ export const NavbarWrapper = styled.div`
     padding-top: 35px;
 
     button {
-      padding-bottom: 8px;
-      letter-spacing: 2px;
+      padding-bottom: 12px;
       background: transparent;
     }
     .active {
-      border-bottom: 4px solid skyblue;
+      border-bottom: 4px solid #ff89b1;
+      padding-bottom: 8px;
     }
   }
 `;
@@ -210,6 +210,7 @@ export const AddTodoWrapper = styled.div`
   .header {
     font-weight: 600;
   }
+  width: 100%;
 
   .field {
     margin: 20px 0px;
@@ -221,11 +222,12 @@ export const AddTodoWrapper = styled.div`
     }
     textarea {
       margin: 0px;
-      min-width: 645px;
-      min-height: 137px;
+      width: 80vw;
       background: whitesmoke;
       border: none;
       padding: 10px;
+      max-width: 700px;
+      min-height: 100px;
     }
     .label {
       margin: 5px 0;

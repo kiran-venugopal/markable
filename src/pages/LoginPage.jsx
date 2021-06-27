@@ -4,6 +4,7 @@ import { GoogleLogin } from "react-google-login";
 import { useHistory } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms";
+import { ReactComponent as Logo } from "../icons/logo-vertical.svg";
 
 export default function LoginPage() {
   const [userData, setUserData] = useRecoilState(userState);
@@ -33,10 +34,12 @@ export default function LoginPage() {
 
   return (
     <div className="center-aligned">
-      <div className="heading-text">Welcome to Todo Master</div>
+      <div className="heading-text">
+        <Logo width={200} />
+      </div>
       <GoogleLogin
         clientId={process.env.REACT_APP_G_CLIENT_ID}
-        buttonText="Login / Register"
+        buttonText="Login / SignUp"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         isSignedIn={isLoggedIn}

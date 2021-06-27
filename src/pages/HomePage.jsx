@@ -6,9 +6,6 @@ import NoteEditor from "./NoteEditor";
 import Todos from "../components/Todo/Todos";
 
 function HomePage() {
-  let { path, url } = useRouteMatch();
-  console.log({ path });
-
   return (
     <div>
       <Navbar />
