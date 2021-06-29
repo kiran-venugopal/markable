@@ -51,5 +51,10 @@ label.checkbox input {
 
 .toast-element {
   color: white !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+}
+
+.content-wrapper {
+  max-height: 100%;
+  overflow: auto;
 }

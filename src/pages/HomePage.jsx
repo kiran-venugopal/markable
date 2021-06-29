@@ -7,7 +7,7 @@ import Todos from "../components/Todo/Todos";
 
 function HomePage() {
   return (
-    <div>
+    <div className="content-wrapper">
       <Navbar />
       <Switch>
         <Route path="/notes" render={() => <Notes />} />
