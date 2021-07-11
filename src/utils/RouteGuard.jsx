@@ -3,22 +3,31 @@ import { Route, Redirect } from "react-router-dom";
 
 const GuardedRoute = ({
   component: Component,
-  auth = true,
-  onlyUnauthorized = false,
+  isAuthenticated = true,
+  unAuthorizedOnly = false,
+  authorizedOnly = false,
+  redirectPath = "/",
   ...rest
 }) => {
   function renderComponent(props) {
     console.log({ rest });
-    if (!auth && rest.location.pathname !== "/") {
-      console.log({ rest });
-      localStorage.setItem("fromUrl", rest.location.pathname);
-    }
 
-    if (auth === true) {
-      if (onlyUnauthorized === true && rest.path !== "/login") {
-        return <Redirect to="/login" />;
-      } else return <Component {...props} />;
-    } else return <Redirect to="/login" />;
+    if (isAuthenticated) {
+      if (unAuthorizedOnly) return <Redirect to={redirectPath} />;
+      return <Component {...props} />;
+    } else if (authorizedOnly)
+      return (
+        <Redirect
+          to={`${redirectPath}${
+            rest.location.pathname.includes("ref") &&
+            !rest.location.pathname.includes(rest.path)
+              ? ""
+              : `?ref=${rest.location.pathname}`
+          }`}
+        />
+      );
+
+    return <Component {...props} />;
   }
 
   return <Route {...rest} render={renderComponent} />;

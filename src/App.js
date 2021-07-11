@@ -18,16 +18,13 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <GuardedRoute
-            onlyUnauthorized={true}
-            path="/login"
-            component={loginPage}
-            exact
-          />
+          <GuardedRoute path="/login" component={loginPage} exact />
           <GuardedRoute
             path="/"
             component={HomePage}
-            auth={userData.isLoggedIn}
+            isAuthenticated={userData.isLoggedIn}
+            authorizedOnly={true}
+            redirectPath="/login"
           />
         </Switch>
       </BrowserRouter>

@@ -25,10 +25,8 @@ export default function LoginPage() {
         token: response.tokenId,
       }));
 
-      let fromPath = localStorage.getItem("fromUrl");
-      localStorage.removeItem("fromUrl");
-
-      history.push(fromPath || "/");
+      let refPath = new URL(window.location.href).searchParams.get("ref");
+      history.push(refPath || "/");
     }
   };
 

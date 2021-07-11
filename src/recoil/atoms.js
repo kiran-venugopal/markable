@@ -8,6 +8,7 @@ export const userState = atom({
     photo: "",
     token: "",
     email: "",
+    currentPathName: "notes",
   },
 });
 

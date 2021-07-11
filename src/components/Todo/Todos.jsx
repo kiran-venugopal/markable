@@ -3,7 +3,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { SectionsWrapper } from "../../styled-components";
 import TodosSection from "./TodosSection";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { todosState, userState } from "../../recoil/atoms";
 import { useEffect } from "react";
 import { Button } from "../../utils/styles";
@@ -12,6 +12,8 @@ import { fetchTodos, updateTodo } from "../../APIs/todo";
 import Modal from "react-modal";
 import { useState } from "react";
 import TodoEditor from "./TodoEditor";
+import { HomeRoutes } from "../../Routes";
+import { useRouteMatch } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -31,6 +33,16 @@ function Todos() {
   const [{ todos, isLoading }, setTodos] = useRecoilState(todosState);
   const [isAddTodoOpen, setIsAddTodoOpen] = useState(false);
   const [userData] = useRecoilState(userState);
+  const setAccountData = useSetRecoilState(userState);
+  const { url } = useRouteMatch();
+
+  useEffect(() => {
+    const routeConfig = HomeRoutes.find((r) => r.path === url);
+    setAccountData((prev) => ({
+      ...prev,
+      currentPathName: routeConfig.name,
+    }));
+  }, [url]);
 
   useEffect(() => {
     const getTodos = async () => {
