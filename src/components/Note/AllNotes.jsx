@@ -69,7 +69,7 @@ const AllNotes = () => {
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           onClick={() => {
-            history.push("/add-note");
+            history.push("/notes/add");
           }}
         >
           <FaPlusSquare className="icon" />

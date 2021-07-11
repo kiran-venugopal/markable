@@ -48,7 +48,7 @@ const NoteItem = ({ note }) => {
   };
 
   const goToEditNote = () => {
-    history.push(`edit-note/${note._id}`);
+    history.push(`/notes/edit/${note._id}`);
   };
 
   const deleteN = async (e) => {

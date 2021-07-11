@@ -23,6 +23,9 @@ function Notes() {
       <Route path={`${url}/add`}>
         <NoteEditor />
       </Route>
+      <Route path={`${url}/edit/:noteId`}>
+        <NoteEditor />
+      </Route>
       <Route exact path={`${url}`}>
         <AllNotes />
       </Route>
