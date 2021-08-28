@@ -60,6 +60,9 @@ export const Button = styled.button`
 export const NoteEditorContainer = styled.div`
   padding: 20px;
   margin: 20px 0;
+  .widget-editor {
+    background: white;
+  }
 
   .button {
     text-align: right;
@@ -82,11 +85,15 @@ export const ContentWrapper = styled.div`
 export const IconButton = styled.button`
   border: none;
   padding: 5px;
-  background: #ececec;
-  margin: 3px;
+  margin: 1px;
   border-radius: 4px;
   display: flex;
   cursor: pointer;
+  background: white;
+  color: grey;
+  :hover {
+    background: whitesmoke;
+  }
 `;
 
 export const AlignToRight = styled.div`

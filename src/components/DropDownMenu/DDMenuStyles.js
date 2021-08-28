@@ -14,7 +14,24 @@ export const DropDownWrapper = styled.div`
   .menu-item {
     padding: 5px 15px;
     text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    color: #4c4c4c;
+    .icon {
+      margin-right: 7px;
+      opacity: 0.6;
+    }
+    transition: transform 100ms;
+
+    :active {
+      transform: scale(0.95);
+    }
   }
+
+  .pointer {
+    cursor: pointer;
+  }
+
   .menu-item:hover {
     background: whitesmoke;
   }

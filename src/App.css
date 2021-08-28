@@ -11,7 +11,7 @@ body {
   font-family: "Noto Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  letter-spacing: 1px;
+  font-size: 14px;
 }
 
 * {
@@ -40,11 +40,6 @@ label.checkbox input {
   margin: 0 8px;
 }
 
-.react-grid-item {
-  box-shadow: rgb(0 0 0 / 28%) 1px 2px 7px;
-  border: none !important;
-}
-
 .ql-container {
   height: calc(100% - 42px) !important;
 }
@@ -55,6 +50,8 @@ label.checkbox input {
 }
 
 .content-wrapper {
-  max-height: 100%;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

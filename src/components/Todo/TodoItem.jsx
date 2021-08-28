@@ -4,7 +4,7 @@ import { FaEllipsisH } from "react-icons/fa";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { deleteTodo, updateTodo } from "../../APIs/todo";
 import { todosState, userState } from "../../recoil/atoms";
-import DropDownMenu from "./DropDownMenu/DropDownMenu";
+import DropDownMenu from "../DropDownMenu/DropDownMenu";
 
 function TodoItem({ todo }) {
   const [, drag] = useDrag(

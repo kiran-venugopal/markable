@@ -7,11 +7,13 @@ function HomePage() {
   return (
     <div className="content-wrapper">
       <Navbar />
-      <Switch>
-        {HomeRoutes.map((routeConfig) => (
-          <Route {...routeConfig} />
-        ))}
-      </Switch>
+      <div style={{ background: "whitesmoke", flexGrow: "1" }}>
+        <Switch>
+          {HomeRoutes.map((routeConfig) => (
+            <Route {...routeConfig} />
+          ))}
+        </Switch>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const NavbarWrapper = styled.div`
-  background: #efefef;
   padding: 10px 10px 0 10px;
-
+  border-bottom: 1px solid #e4e4e4;
   .app-header {
     display: flex;
     justify-content: space-between;
@@ -231,6 +230,25 @@ export const AddTodoWrapper = styled.div`
     }
     .label {
       margin: 5px 0;
+    }
+  }
+`;
+
+export const Spinner = styled.div`
+  border: 2px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 2px solid grey;
+  width: 1em;
+  height: 1em;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 `;

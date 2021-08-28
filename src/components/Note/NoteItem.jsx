@@ -1,84 +1,41 @@
 import React, { useState } from "react";
-import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
+import { FaEllipsisV, FaExpand } from "react-icons/fa";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useHistory } from "react-router-dom";
-import {
-  AlignToRight,
-  Button,
-  IconButton,
-  ModalActions,
-  ModalDangerTitle,
-  ModalQuillWrapper,
-} from "../../utils/styles";
-import Modal from "react-modal";
-import useLocalStorage from "react-use-localstorage";
-import { deleteNote } from "../../APIs/note";
 import { ToastsStore } from "react-toasts";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { notesState, userState } from "../../recoil/atoms";
+import { AlignToRight, IconButton } from "../../utils/styles";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    background: "white",
-  },
-  overlay: {
-    background: "#000000ab",
-  },
-};
+import DropDownMenu from "../DropDownMenu/DropDownMenu";
+import NoteActions from "./NoteActions";
 
 const NoteItem = ({ note }) => {
-  const [isModalOpen, setIsOpen] = useState(false);
-  const setNoteData = useSetRecoilState(notesState);
   const history = useHistory();
-  const [userData] = useRecoilState(userState);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const stopPropagation = (event) => {
-    event.stopPropagation();
-  };
+  const [isActionsVisible, setActions] = useState(false);
 
   const goToEditNote = () => {
     history.push(`/notes/edit/${note._id}`);
   };
 
-  const deleteN = async (e) => {
-    const res = await deleteNote(note._id, userData.token);
-    if (res.success) {
-      ToastsStore.success("Note deleted!", null, "toast-element");
-      setNoteData((prev) => ({
-        ...prev,
-        reload: true,
-      }));
-      return;
-    }
-    ToastsStore.error(res.error, null, "toast-element");
-  };
+  const toggleDropDown = () => setActions((prev) => !prev);
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%", padding: "3px" }}>
       <AlignToRight>
-        <IconButton onClick={goToEditNote}>
-          <FaRegEdit size="20px" />
-        </IconButton>
         <IconButton
-          onClick={(e) => {
-            setIsOpen(true);
-            stopPropagation(e);
-          }}
+          onClick={() =>
+            ToastsStore.success("Under development!", null, "toast-element")
+          }
         >
-          <FaRegTrashAlt size="20px" />
+          <FaExpand size="15px" />
+        </IconButton>
+        <IconButton onClick={toggleDropDown}>
+          <FaEllipsisV size="15px" />
         </IconButton>
       </AlignToRight>
+      <DropDownMenu isOpen={isActionsVisible} onClose={toggleDropDown}>
+        <NoteActions note={note} onEditClick={goToEditNote} />
+      </DropDownMenu>
       <ReactQuill
         className="widget"
         containerPadding={[10, 20]}
@@ -87,10 +44,9 @@ const NoteItem = ({ note }) => {
         theme="bubble"
         style={{ height: "90%" }}
       />
-
-      <Modal
+      {/* <Modal
         isOpen={isModalOpen}
-        onRequestClose={closeModal}
+        onRequestClose={toggleModal}
         style={customStyles}
         contentLabel="Example Modal"
         ariaHideApp={false}
@@ -114,7 +70,7 @@ const NoteItem = ({ note }) => {
             </Button>
           </ModalActions>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

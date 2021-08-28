@@ -100,6 +100,7 @@ const NoteEditor = () => {
         value={note}
         onChange={onNoteChange}
         style={{ height: "350px" }}
+        className="widget-editor"
       />
       {isCreated ? (
         <Button className="button" onClick={update}>
