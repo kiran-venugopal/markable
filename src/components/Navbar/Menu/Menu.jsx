@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../recoil/atoms";
 import { MenuWrapper } from "../../../styled-components";
+import { Button } from "../../../utils/styles";
 
 function Menu() {
   const [userData] = useRecoilState(userState);
@@ -36,6 +37,18 @@ function Menu() {
             </div>
           )}
         />
+        <div>
+          <Button style={{ textDecoration: "none", margin: "20px auto" }}>
+            <a
+              href="https://forms.gle/G784MWJyA3nWFH476"
+              target="_blank"
+              rel="noreferrer"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Share your feedback
+            </a>
+          </Button>
+        </div>
       </div>
     </MenuWrapper>
   );

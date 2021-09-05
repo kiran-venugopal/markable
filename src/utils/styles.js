@@ -38,6 +38,7 @@ export const Button = styled.button`
   padding: 5px 10px;
   color: white;
   box-shadow: 2px 3px 6px 1px #00000036;
+  text-transform: none;
 
   :disabled {
     background: #929292;
