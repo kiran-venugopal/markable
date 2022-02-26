@@ -8,4 +8,7 @@ export const ToolbarConfig = [
   [{ background: [] }],
 ];
 
-export const baseUrl = "https://todo-master-backend.herokuapp.com";
+export const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://todo-master-backend.herokuapp.com";

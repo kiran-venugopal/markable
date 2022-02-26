@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "folders": [
+    {
+      "name": "folder1",
+      "noteIds": [],
+      "folders": [
+        {
+          "name": "folder2",
+          "noteIds": ["rferfergeg"],
+          "folders": []
+        },
+        {
+          "name": "folder3",
+          "noteIds": [],
+          "folders": []
+        }
+      ]
+    }
+  ]
+}

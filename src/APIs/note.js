@@ -3,6 +3,11 @@ import { baseUrl } from "../utils/constants";
 
 export async function fetchNotes(jwt) {
   try {
+    if (process.env.NODE_ENV === "development") {
+      const res = await axios.get(`/mock/notes.json`);
+      return res.data || {};
+    }
+
     const res = await axios.get(`${baseUrl}/get-notes`, {
       headers: {
         Authorization: jwt,
