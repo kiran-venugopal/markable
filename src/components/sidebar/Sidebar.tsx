@@ -1,17 +1,11 @@
 import "./sidebar.css";
+import AuthSection from "./AuthSection";
 
 function Sidebar() {
   return (
     <div className="sidebar">
       <div className="folders"></div>
-      <div className="auth-section">
-        <button className="secondary">Sign In</button>
-        <div className="dropdown">
-          <div className="dd-option">
-            <button className="secondary">Sign In with Google</button>
-          </div>
-        </div>
-      </div>
+      <AuthSection />
     </div>
   );
 }

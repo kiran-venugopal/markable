@@ -7,13 +7,13 @@ body,
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
 * {
-  --background: #171717;
-  --secondary-background: #282828;
-  --ternary-background: #1c1c1c;
+  --background: #0d1117;
+  --secondary-background: #161b22;
+  --ternary-background: #10161d;
   --primay: #2a6ead;
   --text-secondary: #e9e9e9;
-  --text: rgb(243, 243, 243);
-  --button-secondary: #2c2c2c;
+  --text: #dddddd;
+  --button-secondary: #252e38;
   --shadow-color: #171717;
   --dropdown-background: #141414;
 }
@@ -64,10 +64,8 @@ button.primary {
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
-  font-size: 12px;
   letter-spacing: 0.5px;
   cursor: pointer;
-
   display: flex;
   align-items: center;
 }
@@ -83,6 +81,7 @@ button.secondary {
 
 button {
   transition: filter 100ms, transform 100ms;
+  font-size: 12px;
 }
 
 button:hover {
@@ -108,18 +107,27 @@ ul.checkbox_list li input {
 
 .dropdown {
   position: absolute;
-  background: var(--dropdown-background);
+  background: var(--background);
   padding: 20px 10px;
   border-radius: 5px;
-  box-shadow: 1px 2px 8px 0px #1c1c1c;
+  box-shadow: 1px 2px 8px 0px #010101;
+  border: 1px solid #232b37;
 }
 
 .dropdown::after {
+  z-index: 1;
+  background: var(--background);
+  border-left: 1px solid #232b37;
+  border-bottom: 1px solid #232b37;
   content: "";
-  background: var(--dropdown-background);
-  width: 15px;
-  height: 15px;
   display: block;
   position: absolute;
+  width: 12px;
+  height: 12px;
   transform: rotate(45deg);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

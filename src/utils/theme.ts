@@ -66,8 +66,8 @@ export const base = {
 
 export const theme = {
   ...base,
-  background: "#171717",
-  text: "white",
+  background: "#0d1117",
+  text: "#dddddd",
   code: colors.almostWhite,
   cursor: colors.white,
   divider: "#4E5C6E",
