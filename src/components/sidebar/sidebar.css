@@ -1,12 +1,15 @@
 .sidebar {
-  min-width: 200px;
+  min-width: 250px;
   height: 100%;
   background: var(--ternary-background);
   display: flex;
   flex-direction: column;
 }
+
 .folders {
-  flex: 1;
+  flex: 1 1;
+  padding: 10px 0;
+  overflow-y: auto;
 }
 
 .auth-section {
@@ -62,4 +65,46 @@ button.secondary.user {
   text-overflow: ellipsis;
   max-width: 120px;
   overflow: hidden;
+}
+
+.file-item {
+  display: flex;
+  padding: 5px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.file-item:hover {
+  background: var(--secondary-background);
+}
+
+.file-item .icon {
+  padding-right: 6px;
+  display: flex;
+}
+
+.file-item.active {
+  background: var(--background);
+}
+
+.sidebar-actions {
+  display: flex;
+  justify-content: end;
+}
+
+.sidebar-actions button {
+  margin: 5px;
+  padding: 3px 5px;
+}
+
+.file-item .actions {
+  display: none;
+  flex: 1;
+  text-align: right;
+}
+
+.file-item:hover .actions {
+  display: flex;
+  justify-content: flex-end;
 }

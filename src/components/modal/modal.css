@@ -1,0 +1,14 @@
+.modal {
+  width: 100%;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgb(10 10 10 / 90%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  transition: background 200ms;
+  padding-top: 15vh;
+}

@@ -25,7 +25,7 @@ export const base = {
   placeholder: "#B1BECC",
   textSecondary: "#8a8a8a",
   textLight: colors.white,
-  textHighlight: "#b3e7ff",
+  textHighlight: "#baba4f",
   textHighlightForeground: colors.black,
   selected: colors.primary,
   codeComment: "#6a737d",
