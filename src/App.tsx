@@ -5,13 +5,9 @@ import Sidebar from "./components/sidebar";
 import EditorSection from "./components/editor-section";
 
 function App() {
-  const handleMarkdownCopy = () => {
-    navigator.clipboard.writeText("devmode" || "");
-  };
-
   return (
     <div className="App">
-      <Navbar onMarkdownCopy={handleMarkdownCopy} />
+      <Navbar />
       <div className="editor-container">
         <Sidebar />
         <EditorSection />
