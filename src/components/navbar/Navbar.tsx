@@ -5,40 +5,25 @@ import { ReactComponent as DoneIcon } from "../../icons/done.svg";
 import "./navbar.css";
 import { useRecoilState } from "recoil";
 import { notesState } from "../../recoil/atoms";
+import useNoteUpdate from "../../hooks/useNoteUpdate";
 
-type PropsType = {
-  onMarkdownCopy(): void;
-};
-
-function Navbar({ onMarkdownCopy }: PropsType) {
+function Navbar() {
   const [isCopied, setIsCopied] = useState(false);
   const [noteData, setNoteData] = useRecoilState(notesState);
   const [editMode, setEditMode] = useState(false);
+  const updateNote = useNoteUpdate();
   const { activeNote, notes } = noteData;
   const note = notes.find((note) => note._id === activeNote);
 
   const handleCopy = () => {
     setIsCopied(true);
-    onMarkdownCopy();
+    navigator.clipboard.writeText(note?.content || "");
     setTimeout(() => setIsCopied(false), 4000);
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setNoteData((prev) => ({
-      ...prev,
-      notes: [
-        ...prev.notes.map((n) => {
-          if (n._id === note?._id) {
-            return {
-              ...n,
-              name: value,
-            };
-          }
-          return n;
-        }),
-      ],
-    }));
+    updateNote({ _id: note?._id, name: value });
   };
 
   return (
@@ -46,22 +31,25 @@ function Navbar({ onMarkdownCopy }: PropsType) {
       <div className="logo">
         <Logo width={25} height={25} />
       </div>
-      <div className="file-name" onClick={() => setEditMode(true)}>
-        {editMode ? (
-          <input
-            type="text"
-            value={note?.name}
-            autoFocus
-            onBlur={() => setEditMode(false)}
-            onChange={handleNameChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") setEditMode(false);
-            }}
-          />
-        ) : (
-          <Fragment>{note?.name}.md</Fragment>
-        )}
-      </div>
+      {note?._id && (
+        <div className="file-name" onClick={() => setEditMode(true)}>
+          {editMode ? (
+            <input
+              type="text"
+              value={note?.name}
+              autoFocus
+              onFocus={(e) => e.target.select()}
+              onBlur={() => setEditMode(false)}
+              onChange={handleNameChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setEditMode(false);
+              }}
+            />
+          ) : (
+            <Fragment>{note?.name}.md</Fragment>
+          )}
+        </div>
+      )}
       <button onClick={handleCopy} className="primary">
         {isCopied ? (
           <Fragment>

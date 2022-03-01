@@ -16,7 +16,7 @@
 }
 
 .delete-modal {
-  background: #161b22;
+  background: var(--secondary-background);
   padding: 20px 30px;
   border-radius: 6px;
   box-shadow: 2px 2px 9px var(--shadow-color);

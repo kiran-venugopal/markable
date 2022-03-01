@@ -1,45 +1,56 @@
 import "./sidebar.css";
 import AuthSection from "./AuthSection";
 import { useRecoilState } from "recoil";
-import { folderState, notesState } from "../../recoil/atoms";
-import { ReactComponent as MDIcon } from "../../icons/md.svg";
+import { folderState } from "../../recoil/atoms";
 import { ReactComponent as NewFileIcon } from "../../icons/new.svg";
-import { ReactComponent as RemoveIcon } from "../../icons/remove.svg";
-import { uuidv4 } from "../../utils/functions";
+import { ReactComponent as NewFolderIcon } from "../../icons/new-folder.svg";
+import { ReactComponent as FolderIcon } from "../../icons/folder.svg";
 import Modal from "../modal";
 import { useState } from "react";
 import DeleteModal from "./delete-modal/DeleteModal";
+import useNoteCreate from "../../hooks/useNoteCreate";
+import File from "./file";
+import { uuidv4 } from "../../utils/functions";
+import Folder from "./folder";
+
+type deleteNoteDataType = {
+  id: string;
+  folderId?: string;
+};
+
+const initialDeleteNoteData = {
+  id: "",
+};
 
 function Sidebar() {
   const [folderData, setFolderData] = useRecoilState(folderState);
-  const [noteData, setNoteData] = useRecoilState(notesState);
-  const [deleteNote, setDeleteNote] = useState("");
-  const { notes, activeNote } = noteData;
-  const { noteIds } = folderData;
+  const [deleteNote, setDeleteNote] = useState<deleteNoteDataType>(
+    initialDeleteNoteData
+  );
+  const createNote = useNoteCreate();
+  const { noteIds, folders } = folderData;
   console.log({ folderData });
 
-  const handleFileClick = (noteId: string) => () =>
-    setNoteData((prev) => ({ ...prev, activeNote: noteId }));
+  const handleSetDelete = (id: string, folderId?: string) => {
+    setDeleteNote({ id, folderId });
+  };
 
   const createNewFile = () => {
-    const _id = uuidv4();
-    setNoteData((prev) => ({
-      ...prev,
-      notes: [
-        ...prev.notes,
-        {
-          _id,
-          content: "",
-          name: "untitled",
-          userId: "",
-        },
-      ],
-      activeNote: _id,
-    }));
+    createNote({ content: "", name: "untitled", userId: "" });
+  };
 
+  const createNewFolder = () => {
     setFolderData((prev) => ({
       ...prev,
-      noteIds: [...prev.noteIds, _id],
+      folders: [
+        {
+          id: uuidv4(),
+          name: "untitled",
+          noteIds: [],
+          folders: [],
+        },
+        ...prev.folders,
+      ],
     }));
   };
 
@@ -47,7 +58,14 @@ function Sidebar() {
     <div className="sidebar">
       <div className="sidebar-actions">
         <button
-          className="icon-button"
+          className="icon-button new-folder"
+          title="new folder"
+          onClick={createNewFolder}
+        >
+          <NewFolderIcon width={17} height={17} />
+        </button>
+        <button
+          className="icon-button new-file"
           onClick={createNewFile}
           title="new file"
         >
@@ -55,30 +73,26 @@ function Sidebar() {
         </button>
       </div>
       <div className="folders">
+        {folders.map((folder) => (
+          <Folder
+            key={folder.id}
+            folder={folder}
+            setDeleteNote={handleSetDelete}
+          />
+        ))}
         {noteIds.map((nid) => (
-          <div
-            onClick={handleFileClick(nid)}
-            className={`file-item ${activeNote === nid && "active"}`}
-            key={nid}
-          >
-            <div className="icon">
-              <MDIcon width={20} height={20} />
-            </div>
-            {notes.find((n) => n._id === nid)?.name}.md
-            <div className="actions">
-              <button
-                className="icon-button"
-                onClick={() => setDeleteNote(nid)}
-              >
-                <RemoveIcon width={18} height={18} />
-              </button>
-            </div>
-          </div>
+          <File key={nid} noteId={nid} setDeleteNote={handleSetDelete} />
         ))}
       </div>
       <AuthSection />
-      <Modal isOpen={!!deleteNote} onClose={() => setDeleteNote("")}>
-        <DeleteModal onCancel={() => setDeleteNote("")} noteId={deleteNote} />
+      <Modal
+        isOpen={!!deleteNote.id}
+        onClose={() => setDeleteNote(initialDeleteNoteData)}
+      >
+        <DeleteModal
+          onCancel={() => setDeleteNote({ id: "" })}
+          deleteNoteMeta={deleteNote}
+        />
       </Modal>
     </div>
   );

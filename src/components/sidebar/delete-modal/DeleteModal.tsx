@@ -1,62 +1,29 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { folderState, notesState } from "../../../recoil/atoms";
+import { useRecoilState } from "recoil";
+import useNoteDelete from "../../../hooks/useNoteDelete";
+import { notesState } from "../../../recoil/atoms";
 import { INote } from "../../../types";
-import { uuidv4 } from "../../../utils/functions";
 import "./delete-modal.css";
 
 type PropsType = {
   onCancel(): void;
-  noteId: string;
+  deleteNoteMeta: { id: string; folderId?: string };
 };
 
-function DeleteModal({ onCancel, noteId }: PropsType) {
-  const [notesData, setNoteData] = useRecoilState(notesState);
-  const setFolderData = useSetRecoilState(folderState);
+function DeleteModal({ onCancel, deleteNoteMeta }: PropsType) {
+  const [notesData] = useRecoilState(notesState);
   const { notes } = notesData;
   const [note, setNote] = useState<INote>();
+  const deleteNote = useNoteDelete();
 
   useEffect(() => {
-    const note = notes.find((n) => n._id === noteId);
+    const note = notes.find((n) => n._id === deleteNoteMeta.id);
     setNote(note);
   }, []);
 
   const deleteNoteFile = () => {
-    let newNoteId: string;
-    setNoteData((prev) => {
-      const notesAfterDeletion = prev.notes.filter((n) => note?._id !== n._id);
+    if (note?._id) deleteNote(note._id, deleteNoteMeta.folderId);
 
-      let activeNote = notesAfterDeletion.length
-        ? notesAfterDeletion[0]._id
-        : "";
-      if (prev.activeNote === note?._id) {
-        if (prev.notes.length === 1) {
-          const _id = uuidv4();
-          const note = {
-            _id,
-            content: "",
-            name: "untitled",
-            userId: "",
-          };
-          notesAfterDeletion.push(note);
-          activeNote = _id;
-          newNoteId = _id;
-        }
-      }
-      return {
-        ...prev,
-        notes: [...notesAfterDeletion],
-        activeNote,
-      };
-    });
-    setFolderData((prev) => {
-      const noteIdsAfterDeletion = prev.noteIds.filter((n) => n !== noteId);
-      if (newNoteId) noteIdsAfterDeletion.push(newNoteId);
-      return {
-        ...prev,
-        noteIds: [...noteIdsAfterDeletion],
-      };
-    });
     onCancel();
   };
 

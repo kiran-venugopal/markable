@@ -9,4 +9,5 @@ export interface IFolder {
   name: string;
   noteIds: string[];
   folders: IFolder[];
+  id: string;
 }

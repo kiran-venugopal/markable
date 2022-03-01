@@ -1,17 +1,18 @@
 import theme from "../../utils/theme";
 import imageCompression from "browser-image-compression";
 import { useEffect, useState } from "react";
-import Editor from "@nijat13/rich-markdown-editor-with-resizer";
+import Editor from "rich-markdown-editor";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { folderState, notesState } from "../../recoil/atoms";
 import { uuidv4 } from "../../utils/functions";
+import useNoteUpdate from "../../hooks/useNoteUpdate";
 
 function EditorComponent() {
   const [noteData, setNoteData] = useRecoilState(notesState);
   const setFolderData = useSetRecoilState(folderState);
   const { notes, activeNote } = noteData;
   const note = notes.find((n: any) => n._id === activeNote);
-  console.log({ note });
+  const updateNote = useNoteUpdate();
 
   useEffect(() => {
     if (!activeNote) {
@@ -57,18 +58,7 @@ function EditorComponent() {
   const handleEditorChange = (getContent: () => string) => {
     setTimeout(() => {
       const content = getContent();
-      setNoteData((prev) => ({
-        ...prev,
-        notes: prev.notes.map((n) => {
-          if (n._id === note?._id) {
-            return {
-              ...n,
-              content,
-            };
-          }
-          return n;
-        }),
-      }));
+      updateNote({ content, _id: note?._id });
     }, 1000);
   };
 

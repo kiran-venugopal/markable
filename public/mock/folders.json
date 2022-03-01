@@ -4,18 +4,16 @@
   "folders": [
     {
       "name": "folder1",
+      "id": "xswewfe",
       "noteIds": [],
       "folders": [
         {
+          "id": "abcdef",
           "name": "folder2",
           "noteIds": ["rferfergeg"],
           "folders": []
         },
-        {
-          "name": "folder3",
-          "noteIds": [],
-          "folders": []
-        }
+        { "id": "crijopss", "name": "folder3", "noteIds": [], "folders": [] }
       ]
     }
   ]

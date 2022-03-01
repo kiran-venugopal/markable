@@ -6,6 +6,12 @@
   flex-direction: column;
 }
 
+.sidebar .folders::-webkit-scrollbar {
+  background: var(--ternary-background);
+  width: 12px;
+  border-radius: 5px;
+}
+
 .folders {
   flex: 1 1;
   padding: 10px 0;
@@ -67,7 +73,7 @@ button.secondary.user {
   overflow: hidden;
 }
 
-.file-item {
+.dir-item {
   display: flex;
   padding: 5px 10px;
   font-size: 13px;
@@ -75,16 +81,16 @@ button.secondary.user {
   align-items: center;
 }
 
-.file-item:hover {
+.dir-item:hover {
   background: var(--secondary-background);
 }
 
-.file-item .icon {
+.dir-item .icon {
   padding-right: 6px;
   display: flex;
 }
 
-.file-item.active {
+.dir-item.active {
   background: var(--background);
 }
 
@@ -98,13 +104,17 @@ button.secondary.user {
   padding: 3px 5px;
 }
 
-.file-item .actions {
+.dir-item .actions {
   display: none;
   flex: 1;
   text-align: right;
 }
 
-.file-item:hover .actions {
+.dir-item:hover .actions {
   display: flex;
   justify-content: flex-end;
+}
+
+.sidebar-actions .icon-button.new-file {
+  padding: 2.5px 3px 5px 5px;
 }

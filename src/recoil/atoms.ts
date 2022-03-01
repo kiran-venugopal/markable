@@ -13,45 +13,36 @@ export const userState = atom({
   },
 });
 
-type initialDataType = {
+export type initialNoteDataType = {
   notes: INote[];
   reload: boolean;
   isLoading: boolean;
   activeNote: string;
 };
 
-export const notesState = atom<initialDataType>({
+export const notesState = atom<initialNoteDataType>({
   key: "NOTES",
   default: {
-    notes: [
-      {
-        _id: "eerferf",
-        content: "# Welcome to Notes and Todos",
-        name: "test",
-        userId: "",
-      },
-      {
-        _id: "eerfeddrf",
-        content: "# this is for  testing",
-        name: "test2",
-        userId: "",
-      },
-    ],
+    notes: JSON.parse(window.localStorage.getItem("notes") || "[]"),
     reload: false,
     isLoading: true,
     activeNote: "",
   },
 });
 
-type folderDataType = {
+export type folderDataType = {
   folders: IFolder[];
   noteIds: string[];
 };
 
+const initialFolderData = {
+  folders: [],
+  noteIds: [],
+};
+
 export const folderState = atom<folderDataType>({
   key: "FOLDER",
-  default: {
-    folders: [],
-    noteIds: ["eerferf", "eerfeddrf"],
-  },
+  default:
+    JSON.parse(window.localStorage.getItem("folders") || "false") ||
+    initialFolderData,
 });
