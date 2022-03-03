@@ -1,4 +1,3 @@
-import "./sidebar.css";
 import AuthSection from "./AuthSection";
 import { useRecoilState } from "recoil";
 import { folderState } from "../../recoil/atoms";
@@ -12,6 +11,7 @@ import useNoteCreate from "../../hooks/useNoteCreate";
 import File from "./file";
 import { uuidv4 } from "../../utils/functions";
 import Folder from "./folder";
+import "./sidebar.css";
 
 type deleteNoteDataType = {
   id: string;
@@ -45,7 +45,7 @@ function Sidebar() {
       folders: [
         {
           id: uuidv4(),
-          name: "untitled",
+          name: "Untitled",
           noteIds: [],
           folders: [],
         },

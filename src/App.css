@@ -159,3 +159,16 @@ button.icon-button:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--button-secondary);
 }
+
+input.edit-name {
+  background: transparent;
+  border: none;
+  color: inherit;
+  text-align: center;
+  font-size: 15px;
+}
+
+input.edit-name:focus {
+  outline: none;
+  border-bottom: 1px solid var(--primary);
+}

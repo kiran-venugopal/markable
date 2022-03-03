@@ -2,3 +2,12 @@
   padding-bottom: 2px;
   padding-top: 0px;
 }
+
+.folder .edit-name {
+  text-align: left;
+}
+
+.folder-files {
+  height: 0;
+  overflow: hidden;
+}

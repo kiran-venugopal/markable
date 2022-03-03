@@ -7,16 +7,3 @@
   align-items: center;
   padding: 0 15px;
 }
-
-.file-name input {
-  background: transparent;
-  border: none;
-  color: inherit;
-  text-align: center;
-  font-size: 15px;
-}
-
-.file-name input:focus {
-  outline: none;
-  border-bottom: 1px solid var(--primary);
-}

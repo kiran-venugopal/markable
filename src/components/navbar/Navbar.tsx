@@ -36,6 +36,7 @@ function Navbar() {
           {editMode ? (
             <input
               type="text"
+              className="edit-name"
               value={note?.name}
               autoFocus
               onFocus={(e) => e.target.select()}

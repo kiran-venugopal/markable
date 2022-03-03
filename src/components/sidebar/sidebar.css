@@ -4,6 +4,11 @@
   background: var(--ternary-background);
   display: flex;
   flex-direction: column;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none;
 }
 
 .sidebar .folders::-webkit-scrollbar {
@@ -96,7 +101,7 @@ button.secondary.user {
 
 .sidebar-actions {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .sidebar-actions button {
