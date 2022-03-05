@@ -1,4 +1,5 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
+import useContainerClick from "use-container-click";
 import "./modal.css";
 
 type PropsType = {
@@ -8,11 +9,14 @@ type PropsType = {
 };
 
 function Modal({ children, isOpen = false, onClose = () => {} }: PropsType) {
+  const ref = useRef(document.createElement("div"));
+  useContainerClick(ref, onClose);
+
   if (!isOpen) return null;
 
   return (
     <div className="modal">
-      <span>{children}</span>
+      <span ref={ref}>{children}</span>
     </div>
   );
 }

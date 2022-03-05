@@ -3,15 +3,14 @@ import { useRecoilState } from "recoil";
 import { folderState } from "../../recoil/atoms";
 import { ReactComponent as NewFileIcon } from "../../icons/new.svg";
 import { ReactComponent as NewFolderIcon } from "../../icons/new-folder.svg";
-import { ReactComponent as FolderIcon } from "../../icons/folder.svg";
 import Modal from "../modal";
 import { useState } from "react";
-import DeleteModal from "./delete-modal/DeleteModal";
 import useNoteCreate from "../../hooks/useNoteCreate";
 import File from "./file";
 import { uuidv4 } from "../../utils/functions";
 import Folder from "./folder";
 import "./sidebar.css";
+import DeleteFile from "./file/delete-file";
 
 type deleteNoteDataType = {
   id: string;
@@ -89,7 +88,7 @@ function Sidebar() {
         isOpen={!!deleteNote.id}
         onClose={() => setDeleteNote(initialDeleteNoteData)}
       >
-        <DeleteModal
+        <DeleteFile
           onCancel={() => setDeleteNote({ id: "" })}
           deleteNoteMeta={deleteNote}
         />
