@@ -12,7 +12,7 @@ function DeleteView({ name, type = "File", onCancel, onDelete }: PropsType) {
         Delete {type} <strong>{name}</strong>!
       </div>
       <div className="message">
-        Do you really want to delete the {type.toLowerCase()} <i>{name}</i> $
+        Do you really want to delete the {type.toLowerCase()} <i>{name}</i>
         {type === "Folder" && "and its content"}? This process cannot be undone.
       </div>
       <div className="actions">

@@ -2,6 +2,7 @@ import { IFolder } from "../../../types";
 import { ReactComponent as FolderIcon } from "../../../icons/folder.svg";
 import { ReactComponent as FolderOpenIcon } from "../../../icons/folder-open.svg";
 import { ReactComponent as NewFileIcon } from "../../../icons/new.svg";
+import { ReactComponent as RemoveIcon } from "../../../icons/remove.svg";
 import File from "../file";
 import "./folder.css";
 import useNoteCreate from "../../../hooks/useNoteCreate";
@@ -10,11 +11,13 @@ import {
   Fragment,
   KeyboardEventHandler,
   MouseEventHandler,
+  useEffect,
   useState,
 } from "react";
-import { useSetRecoilState } from "recoil";
-import { folderDataType, folderState } from "../../../recoil/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { folderDataType, folderState, notesState } from "../../../recoil/atoms";
 import Modal from "../../modal";
+import DeleteFolder from "./delete-folder";
 
 type PropsType = {
   folder: IFolder;
@@ -31,6 +34,15 @@ export default function Folder({
   const [editMode, setEditMode] = useState(enableEdit);
   const setFolderData = useSetRecoilState(folderState);
   const [isOpen, setIsOpen] = useState(false);
+  const [deleteFolder, setDeleteFolder] = useState<IFolder>();
+  const [noteData] = useRecoilState(notesState);
+  const { activeNote } = noteData;
+
+  useEffect(() => {
+    if (folder.noteIds.includes(activeNote)) {
+      setIsOpen(true);
+    }
+  }, [activeNote]);
 
   const handleClick: MouseEventHandler = (e) => {
     e.stopPropagation();
@@ -75,6 +87,10 @@ export default function Folder({
     setIsOpen((prev) => !prev);
   };
 
+  const handleDeleteClick = (folder: IFolder) => {
+    setDeleteFolder(folder);
+  };
+
   return (
     <Fragment>
       <div className="dir-item folder" onClick={handleFolderClick}>
@@ -103,6 +119,13 @@ export default function Folder({
           <button className="icon-button new-file" onClick={handleClick}>
             <NewFileIcon width={16} height={16} />
           </button>
+          <button
+            style={{ marginLeft: "8px" }}
+            className="icon-button new-file"
+            onClick={() => handleDeleteClick(folder)}
+          >
+            <RemoveIcon width={16} height={16} />
+          </button>
         </div>
       </div>
       <div
@@ -118,8 +141,11 @@ export default function Folder({
           />
         ))}
       </div>
-      <Modal isOpen={true} onClose={() => {}}>
-        <div>helo world</div>
+      <Modal isOpen={!!deleteFolder} onClose={() => setDeleteFolder(undefined)}>
+        <DeleteFolder
+          folder={deleteFolder as IFolder}
+          onCancel={() => setDeleteFolder(undefined)}
+        />
       </Modal>
     </Fragment>
   );

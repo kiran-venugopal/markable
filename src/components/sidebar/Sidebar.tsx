@@ -12,6 +12,7 @@ import File from "./file";
 import { uuidv4 } from "../../utils/functions";
 import Folder from "./folder";
 import "./sidebar.css";
+import useDBUpdater from "../../hooks/useDBUpdater";
 
 type deleteNoteDataType = {
   id: string;
@@ -28,6 +29,7 @@ function Sidebar() {
     initialDeleteNoteData
   );
   const createNote = useNoteCreate();
+  useDBUpdater();
   const { noteIds, folders } = folderData;
   console.log({ folderData });
 
