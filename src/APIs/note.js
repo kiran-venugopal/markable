@@ -3,7 +3,7 @@ import { baseUrl } from "../utils/constants";
 
 export async function fetchNotes(jwt) {
   try {
-    const res = await axios.get(`${baseUrl}/get-notes`, {
+    const res = await axios.get(`${baseUrl}/notes`, {
       headers: {
         Authorization: jwt,
       },
@@ -29,7 +29,7 @@ export async function createNote(note, jwt) {
   }
 }
 
-export async function updateNote(noteId, note, jwt) {
+export async function updateNoteData(noteId, note, jwt) {
   try {
     const res = await axios.post(`${baseUrl}/update-note?id=${noteId}`, note, {
       headers: {

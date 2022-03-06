@@ -27,9 +27,7 @@ function DeleteFolder({ folder, onCancel }: PropsType) {
       return newFolderData;
     });
     setNotesData((prev) => {
-      newNotes = prev.notes.filter(
-        (note) => !removedNoteIds.includes(note._id)
-      );
+      newNotes = prev.notes.filter((note) => !removedNoteIds.includes(note.id));
       return {
         ...prev,
         notes: newNotes,

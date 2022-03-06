@@ -2,7 +2,7 @@ export interface INote {
   content: string;
   userId: string;
   name: string;
-  _id: string;
+  id: string;
 }
 
 export interface IFolder {

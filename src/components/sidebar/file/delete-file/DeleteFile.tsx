@@ -18,12 +18,12 @@ function DeleteFile({ onCancel, deleteNoteMeta }: PropsType) {
   const deleteNote = useNoteDelete();
 
   useEffect(() => {
-    const note = notes.find((n) => n._id === deleteNoteMeta.id);
+    const note = notes.find((n) => n.id === deleteNoteMeta.id);
     setNote(note);
   }, []);
 
   const deleteNoteFile = () => {
-    if (note?._id) deleteNote(note._id, deleteNoteMeta.folderId);
+    if (note?.id) deleteNote(note.id, deleteNoteMeta.folderId);
 
     onCancel();
   };

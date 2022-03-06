@@ -2,7 +2,7 @@
   "success": true,
   "notes": [
     {
-      "_id": "rferfergeg",
+      "id": "rferfergeg",
       "content": "### Hello world",
       "name": "testfile"
     }

@@ -9,7 +9,7 @@ export default function useNoteUpdate() {
     let newNotes: INote[] = [];
     setNoteData((prev) => {
       newNotes = prev.notes.map((n) => {
-        if (n._id === note?._id) {
+        if (n.id === note?.id) {
           return {
             ...n,
             ...note,

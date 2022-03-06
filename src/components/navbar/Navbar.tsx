@@ -13,7 +13,7 @@ function Navbar() {
   const [editMode, setEditMode] = useState(false);
   const updateNote = useNoteUpdate();
   const { activeNote, notes } = noteData;
-  const note = notes.find((note) => note._id === activeNote);
+  const note = notes.find((note) => note.id === activeNote);
 
   const handleCopy = () => {
     setIsCopied(true);
@@ -23,7 +23,7 @@ function Navbar() {
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    updateNote({ _id: note?._id, name: value });
+    updateNote({ id: note?.id, name: value });
   };
 
   return (
@@ -31,7 +31,7 @@ function Navbar() {
       <div className="logo">
         <Logo width={25} height={25} />
       </div>
-      {note?._id && (
+      {note?.id && (
         <div className="file-name" onClick={() => setEditMode(true)}>
           {editMode ? (
             <input

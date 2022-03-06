@@ -39,6 +39,7 @@ export default function Folder({
   const { activeNote } = noteData;
 
   useEffect(() => {
+    console.log({ noteData, folder });
     if (folder.noteIds.includes(activeNote)) {
       setIsOpen(true);
     }

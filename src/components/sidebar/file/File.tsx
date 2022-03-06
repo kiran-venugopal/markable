@@ -17,7 +17,7 @@ function File({ noteId, setDeleteNote, folderId }: PropsType) {
   const [note, setNote] = useState<INote>();
 
   useEffect(() => {
-    const note = notes.find((n) => n._id === noteId);
+    const note = notes.find((n) => n.id === noteId);
     setNote(note);
   }, [noteId, notes]);
 
