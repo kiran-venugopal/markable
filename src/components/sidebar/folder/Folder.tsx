@@ -14,6 +14,7 @@ import {
 } from "react";
 import { useSetRecoilState } from "recoil";
 import { folderDataType, folderState } from "../../../recoil/atoms";
+import Modal from "../../modal";
 
 type PropsType = {
   folder: IFolder;
@@ -117,6 +118,9 @@ export default function Folder({
           />
         ))}
       </div>
+      <Modal isOpen={true} onClose={() => {}}>
+        <div>helo world</div>
+      </Modal>
     </Fragment>
   );
 }
