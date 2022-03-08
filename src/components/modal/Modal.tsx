@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useRef } from "react";
 import useContainerClick from "use-container-click";
 import "./modal.css";
 
