@@ -1,6 +1,6 @@
 import AuthSection from "./AuthSection";
 import { useRecoilState } from "recoil";
-import { folderDataType, folderState } from "../../recoil/atoms";
+import { folderDataType, folderState, userState } from "../../recoil/atoms";
 import { ReactComponent as NewFileIcon } from "../../icons/new.svg";
 import { ReactComponent as NewFolderIcon } from "../../icons/new-folder.svg";
 import { ReactComponent as FolderIcon } from "../../icons/folder.svg";
@@ -29,10 +29,11 @@ function Sidebar() {
   const [deleteNote, setDeleteNote] = useState<deleteNoteDataType>(
     initialDeleteNoteData
   );
+  const [userData] = useRecoilState(userState);
   const createNote = useNoteCreate();
   useDBUpdater();
   const { noteIds, folders } = folderData;
-  console.log({ folderData });
+  const { isLoggedIn } = userData;
 
   const handleSetDelete = (id: string, folderId?: string) => {
     setDeleteNote({ id, folderId });
@@ -59,7 +60,7 @@ function Sidebar() {
       };
       return newFolderData;
     });
-    updateFolders(newFolderData);
+    if (isLoggedIn) updateFolders(newFolderData);
   };
 
   return (

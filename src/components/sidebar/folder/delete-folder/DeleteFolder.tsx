@@ -1,10 +1,11 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { updateFolders } from "../../../../APIs/folder";
 import { deleteNoteData } from "../../../../APIs/note";
 import {
   folderDataType,
   folderState,
   notesState,
+  userState,
 } from "../../../../recoil/atoms";
 import { IFolder, INote } from "../../../../types";
 import DeleteView from "../../delete-view/DeleteView";
@@ -17,6 +18,8 @@ type PropsType = {
 function DeleteFolder({ folder, onCancel }: PropsType) {
   const setFolderData = useSetRecoilState(folderState);
   const setNotesData = useSetRecoilState(notesState);
+  const [userData] = useRecoilState(userState);
+  const { isLoggedIn } = userData;
 
   const hanldeDelete = async () => {
     let newFolderData = {} as folderDataType;
@@ -42,9 +45,11 @@ function DeleteFolder({ folder, onCancel }: PropsType) {
     window.localStorage.setItem("notes", JSON.stringify(newNotes));
     window.localStorage.setItem("folders", JSON.stringify(newFolderData));
 
-    updateFolders(newFolderData);
-    for (let i = 0; i < removedNoteIds.length; i++) {
-      await deleteNoteData(removedNoteIds[i]);
+    if (isLoggedIn) {
+      updateFolders(newFolderData);
+      for (let i = 0; i < removedNoteIds.length; i++) {
+        await deleteNoteData(removedNoteIds[i]);
+      }
     }
   };
 

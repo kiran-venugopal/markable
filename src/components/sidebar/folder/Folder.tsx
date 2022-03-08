@@ -16,7 +16,12 @@ import {
   useState,
 } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { folderDataType, folderState, notesState } from "../../../recoil/atoms";
+import {
+  folderDataType,
+  folderState,
+  notesState,
+  userState,
+} from "../../../recoil/atoms";
 import Modal from "../../modal";
 import DeleteFolder from "./delete-folder";
 import { updateFolders } from "../../../APIs/folder";
@@ -38,7 +43,9 @@ export default function Folder({
   const [isOpen, setIsOpen] = useState(false);
   const [deleteFolder, setDeleteFolder] = useState<IFolder>();
   const [noteData] = useRecoilState(notesState);
+  const [userData] = useRecoilState(userState);
   const { activeNote } = noteData;
+  const { isLoggedIn } = userData;
   const timerRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
@@ -76,9 +83,10 @@ export default function Folder({
     });
     window.localStorage.setItem("folders", JSON.stringify(folderData));
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      updateFolders(folderData);
-    }, 5000);
+    if (isLoggedIn)
+      timerRef.current = setTimeout(() => {
+        updateFolders(folderData);
+      }, 5000);
   };
 
   const handleEmptyName = (eventTarget: EventTarget) => {

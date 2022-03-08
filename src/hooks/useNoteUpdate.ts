@@ -1,11 +1,13 @@
 import { useRef } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { updateNoteData } from "../APIs/note";
-import { notesState } from "../recoil/atoms";
+import { notesState, userState } from "../recoil/atoms";
 import { INote } from "../types";
 
 export default function useNoteUpdate() {
   const setNoteData = useSetRecoilState(notesState);
+  const [userData] = useRecoilState(userState);
+  const { isLoggedIn } = userData;
   const timerRef = useRef<NodeJS.Timeout>();
 
   function updateNote(note: Partial<INote>) {
@@ -29,9 +31,10 @@ export default function useNoteUpdate() {
     });
     window.localStorage.setItem("notes", JSON.stringify(newNotes));
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      updateNoteData(updatedNote.id, updatedNote);
-    }, 5000);
+    if (isLoggedIn)
+      timerRef.current = setTimeout(() => {
+        updateNoteData(updatedNote.id, updatedNote);
+      }, 5000);
   }
 
   return updateNote;

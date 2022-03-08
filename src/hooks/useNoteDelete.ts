@@ -1,13 +1,20 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { updateFolders } from "../APIs/folder";
 import { deleteNoteData } from "../APIs/note";
-import { folderDataType, folderState, notesState } from "../recoil/atoms";
+import {
+  folderDataType,
+  folderState,
+  notesState,
+  userState,
+} from "../recoil/atoms";
 import { INote } from "../types";
 import { uuidv4 } from "../utils/functions";
 
 export default function useNoteDelete() {
   const setNoteData = useSetRecoilState(notesState);
   const setFolderData = useSetRecoilState(folderState);
+  const [userData] = useRecoilState(userState);
+  const { isLoggedIn } = userData;
 
   function deleteNote(noteId: string, folderId?: string) {
     let notesAfterDeletion: INote[] = [];
@@ -75,10 +82,12 @@ export default function useNoteDelete() {
       return newFolderData as folderDataType;
     });
 
-    deleteNoteData(noteId).then(() => {});
     window.localStorage.setItem("notes", JSON.stringify(notesAfterDeletion));
     window.localStorage.setItem("folders", JSON.stringify(newFolderData));
-    updateFolders(newFolderData as folderDataType).then(() => {});
+    if (isLoggedIn) {
+      updateFolders(newFolderData as folderDataType).then(() => {});
+      deleteNoteData(noteId).then(() => {});
+    }
   }
 
   return deleteNote;
