@@ -26,6 +26,13 @@ function Navbar() {
     updateNote({ id: note?.id, name: value });
   };
 
+  const handleAfterRename = () => {
+    setEditMode(false);
+    if (!note?.name.trim()) {
+      updateNote({ id: note?.id, name: "untitled" });
+    }
+  };
+
   return (
     <div className="navbar">
       <div className="logo">
@@ -40,10 +47,10 @@ function Navbar() {
               value={note?.name}
               autoFocus
               onFocus={(e) => e.target.select()}
-              onBlur={() => setEditMode(false)}
+              onBlur={handleAfterRename}
               onChange={handleNameChange}
               onKeyDown={(e) => {
-                if (e.key === "Enter") setEditMode(false);
+                if (e.key === "Enter") handleAfterRename();
               }}
             />
           ) : (

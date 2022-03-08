@@ -12,12 +12,14 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { folderDataType, folderState, notesState } from "../../../recoil/atoms";
 import Modal from "../../modal";
 import DeleteFolder from "./delete-folder";
+import { updateFolders } from "../../../APIs/folder";
 
 type PropsType = {
   folder: IFolder;
@@ -37,9 +39,9 @@ export default function Folder({
   const [deleteFolder, setDeleteFolder] = useState<IFolder>();
   const [noteData] = useRecoilState(notesState);
   const { activeNote } = noteData;
+  const timerRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    console.log({ noteData, folder });
     if (folder.noteIds.includes(activeNote)) {
       setIsOpen(true);
     }
@@ -62,7 +64,7 @@ export default function Folder({
   };
 
   const changeFolderName = (newName: string) => {
-    let folderData = {};
+    let folderData = {} as folderDataType;
     setFolderData((prev) => {
       folderData = {
         ...prev,
@@ -70,9 +72,13 @@ export default function Folder({
           f.id === folder.id ? { ...f, name: newName } : f
         ),
       };
-      return folderData as folderDataType;
+      return folderData;
     });
     window.localStorage.setItem("folders", JSON.stringify(folderData));
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      updateFolders(folderData);
+    }, 5000);
   };
 
   const handleEmptyName = (eventTarget: EventTarget) => {

@@ -13,17 +13,18 @@ import { IFolder, INote } from "../types";
 function useDBUpdater() {
   const [userData] = useRecoilState(userState);
   const setNotesData = useSetRecoilState(notesState);
-  const [folderData, setFolderData] = useRecoilState(folderState);
+  const setFolderData = useSetRecoilState(folderState);
   const { isLoggedIn } = userData;
 
   useEffect(() => {
-    const getNotes = async () => {
-      const response = await fetchNotes(userData.token);
+    const syncUpWithDB = async () => {
+      // downloading the notes from db
+      const response = await fetchNotes();
       if (response.success) {
         const notesInDB = response.notes;
         let newNotes: INote[] = [];
         let notesNotInDB: INote[] = [];
-        let newFolderData;
+
         setNotesData((prev) => {
           const noteIDs = prev.notes.map((note) => note.id);
           const notesNotInLocal = notesInDB.filter(
@@ -42,11 +43,13 @@ function useDBUpdater() {
         });
 
         window.localStorage.setItem("notes", JSON.stringify(newNotes));
-        const folderResponse = await fetchFolders(userData.token);
+        // downloading the folder data from db
+        const folderResponse = await fetchFolders();
         if (folderResponse.success) {
           let newFolderData: Partial<folderDataType> = {};
           const foldersInDB = folderResponse.folders || [];
           const fNotesInDB = folderResponse.noteIds || [];
+
           setFolderData((prev) => {
             const folderIds = prev.folders.map((folder) => folder.id);
             const foldersNotInLocal = foldersInDB.filter(
@@ -65,17 +68,20 @@ function useDBUpdater() {
             return newFolderData as folderDataType;
           });
           window.localStorage.setItem("folders", JSON.stringify(newFolderData));
-          await updateFolders(newFolderData as folderDataType, userData.token);
 
+          // updating the folders
+          await updateFolders(newFolderData as folderDataType);
+
+          // updating the notes those are not in db
           for (let i = 0; i < notesNotInDB.length; i++) {
             let note = notesNotInDB[i];
-            await updateNoteData(note.id, note, userData.token);
+            await updateNoteData(note.id, note);
           }
         }
       }
     };
 
-    if (isLoggedIn) getNotes();
+    if (isLoggedIn) syncUpWithDB();
   }, [isLoggedIn]);
 }
 

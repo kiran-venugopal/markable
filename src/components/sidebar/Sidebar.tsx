@@ -1,6 +1,6 @@
 import AuthSection from "./AuthSection";
 import { useRecoilState } from "recoil";
-import { folderState } from "../../recoil/atoms";
+import { folderDataType, folderState } from "../../recoil/atoms";
 import { ReactComponent as NewFileIcon } from "../../icons/new.svg";
 import { ReactComponent as NewFolderIcon } from "../../icons/new-folder.svg";
 import { ReactComponent as FolderIcon } from "../../icons/folder.svg";
@@ -13,6 +13,7 @@ import { uuidv4 } from "../../utils/functions";
 import Folder from "./folder";
 import "./sidebar.css";
 import useDBUpdater from "../../hooks/useDBUpdater";
+import { updateFolders } from "../../APIs/folder";
 
 type deleteNoteDataType = {
   id: string;
@@ -42,18 +43,23 @@ function Sidebar() {
   };
 
   const createNewFolder = () => {
-    setFolderData((prev) => ({
-      ...prev,
-      folders: [
-        {
-          id: uuidv4(),
-          name: "Untitled",
-          noteIds: [],
-          folders: [],
-        },
-        ...prev.folders,
-      ],
-    }));
+    let newFolderData = {} as folderDataType;
+    setFolderData((prev) => {
+      newFolderData = {
+        ...prev,
+        folders: [
+          {
+            id: uuidv4(),
+            name: "Untitled",
+            noteIds: [],
+            folders: [],
+          },
+          ...prev.folders,
+        ],
+      };
+      return newFolderData;
+    });
+    updateFolders(newFolderData);
   };
 
   return (

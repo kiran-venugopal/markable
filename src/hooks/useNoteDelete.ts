@@ -1,4 +1,6 @@
 import { useSetRecoilState } from "recoil";
+import { updateFolders } from "../APIs/folder";
+import { deleteNoteData } from "../APIs/note";
 import { folderDataType, folderState, notesState } from "../recoil/atoms";
 import { INote } from "../types";
 import { uuidv4 } from "../utils/functions";
@@ -73,8 +75,10 @@ export default function useNoteDelete() {
       return newFolderData as folderDataType;
     });
 
+    deleteNoteData(noteId).then(() => {});
     window.localStorage.setItem("notes", JSON.stringify(notesAfterDeletion));
     window.localStorage.setItem("folders", JSON.stringify(newFolderData));
+    updateFolders(newFolderData as folderDataType).then(() => {});
   }
 
   return deleteNote;

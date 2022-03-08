@@ -5,7 +5,7 @@ import {
   initialNoteDataType,
   notesState,
 } from "../recoil/atoms";
-import { IFolder, INote } from "../types";
+import { INote } from "../types";
 import { uuidv4 } from "../utils/functions";
 
 export default function useNoteCreate() {

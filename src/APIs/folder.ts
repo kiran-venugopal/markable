@@ -1,14 +1,10 @@
-import axios from "axios";
+import { axiosInstance } from ".";
 import { folderDataType } from "../recoil/atoms";
 import { baseUrl } from "../utils/constants";
 
-export async function fetchFolders(jwt: string) {
+export async function fetchFolders() {
   try {
-    const response = await axios.get(baseUrl + "/folders", {
-      headers: {
-        Authorization: jwt,
-      },
-    });
+    const response = await axiosInstance.get(baseUrl + "/folders");
     return response.data || {};
   } catch (err) {
     console.error(err);
@@ -16,13 +12,12 @@ export async function fetchFolders(jwt: string) {
   }
 }
 
-export async function updateFolders(folderData: folderDataType, jwt: string) {
+export async function updateFolders(folderData: folderDataType) {
   try {
-    const response = await axios.post(baseUrl + "/update-folders", folderData, {
-      headers: {
-        Authorization: jwt,
-      },
-    });
+    const response = await axiosInstance.post(
+      baseUrl + "/update-folders",
+      folderData
+    );
     return response.data || {};
   } catch (err) {
     console.error(err);

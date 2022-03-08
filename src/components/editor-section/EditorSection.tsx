@@ -1,12 +1,11 @@
 import theme from "../../utils/theme";
 import imageCompression from "browser-image-compression";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import Editor from "rich-markdown-editor";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { folderState, notesState, userState } from "../../recoil/atoms";
+import { folderState, notesState } from "../../recoil/atoms";
 import { uuidv4 } from "../../utils/functions";
 import useNoteUpdate from "../../hooks/useNoteUpdate";
-import { updateNoteData } from "../../APIs/note";
 
 function EditorComponent() {
   const [noteData, setNoteData] = useRecoilState(notesState);
@@ -14,8 +13,6 @@ function EditorComponent() {
   const { notes, activeNote } = noteData;
   const note = notes.find((n: any) => n.id === activeNote);
   const updateNote = useNoteUpdate();
-  const timerRef = useRef<NodeJS.Timeout>();
-  const [userData] = useRecoilState(userState);
 
   useEffect(() => {
     if (!activeNote) {
@@ -63,17 +60,6 @@ function EditorComponent() {
       const content = getContent();
       updateNote({ content, id: note?.id });
     }, 1000);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(async () => {
-      await updateNoteData(
-        note?.id,
-        {
-          content: getContent(),
-          name: note?.name,
-        },
-        userData.token
-      );
-    }, 4000);
   };
 
   return (
