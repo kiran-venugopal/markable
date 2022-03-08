@@ -1,18 +1,9 @@
-import axios from "axios";
+import { axiosInstance } from ".";
 import { baseUrl } from "../utils/constants";
 
-export async function fetchNotes(jwt) {
+export async function fetchNotes() {
   try {
-    if (process.env.NODE_ENV === "development") {
-      const res = await axios.get(`/mock/notes.json`);
-      return res.data || {};
-    }
-
-    const res = await axios.get(`${baseUrl}/get-notes`, {
-      headers: {
-        Authorization: jwt,
-      },
-    });
+    const res = await axiosInstance.get(`${baseUrl}/notes`);
     return res.data || {};
   } catch (err) {
     console.error(err);
@@ -20,13 +11,9 @@ export async function fetchNotes(jwt) {
   }
 }
 
-export async function createNote(note, jwt) {
+export async function createNote(note) {
   try {
-    const res = await axios.post(`${baseUrl}/create-note`, note, {
-      headers: {
-        Authorization: jwt,
-      },
-    });
+    const res = await axiosInstance.post(`${baseUrl}/create-note`, note);
     return res.data || {};
   } catch (err) {
     console.error(err);
@@ -34,13 +21,12 @@ export async function createNote(note, jwt) {
   }
 }
 
-export async function updateNote(noteId, note, jwt) {
+export async function updateNoteData(noteId, note) {
   try {
-    const res = await axios.post(`${baseUrl}/update-note?id=${noteId}`, note, {
-      headers: {
-        Authorization: jwt,
-      },
-    });
+    const res = await axiosInstance.post(
+      `${baseUrl}/update-note?id=${noteId}`,
+      note
+    );
     return res.data || {};
   } catch (err) {
     console.error(err);
@@ -48,13 +34,9 @@ export async function updateNote(noteId, note, jwt) {
   }
 }
 
-export async function updateLayouts(layouts, jwt) {
+export async function updateLayouts(layouts) {
   try {
-    const res = await axios.post(`${baseUrl}/update-layouts`, layouts, {
-      headers: {
-        Authorization: jwt,
-      },
-    });
+    const res = await axiosInstance.post(`${baseUrl}/update-layouts`, layouts);
     return res.data || {};
   } catch (err) {
     console.error(err);
@@ -62,13 +44,11 @@ export async function updateLayouts(layouts, jwt) {
   }
 }
 
-export async function deleteNote(noteId, jwt) {
+export async function deleteNoteData(noteId) {
   try {
-    const res = await axios.delete(`${baseUrl}/delete-note?id=${noteId}`, {
-      headers: {
-        Authorization: jwt,
-      },
-    });
+    const res = await axiosInstance.delete(
+      `${baseUrl}/delete-note?id=${noteId}`
+    );
     return res.data || {};
   } catch (err) {
     console.error(err);

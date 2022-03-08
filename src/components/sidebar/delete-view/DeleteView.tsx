@@ -1,22 +1,19 @@
-import "./delete-view.css";
-
 type PropsType = {
-  onCancel(): void;
-  onDelete(): void;
   name: string;
   type?: "File" | "Folder";
+  onDelete(): void;
+  onCancel(): void;
 };
 
-function DeleteView({ onCancel, onDelete, name, type = "File" }: PropsType) {
+function DeleteView({ name, type = "File", onCancel, onDelete }: PropsType) {
   return (
     <div className="delete-modal">
       <div className="title">
-        Delete {type} <strong>{name}</strong>
+        Delete {type} <strong>{name}</strong>!
       </div>
       <div className="message">
         Do you really want to delete the {type.toLowerCase()} <i>{name}</i>
-        {type === "Folder" ? " and its files" : ""} ? This process cannot be
-        undone.
+        {type === "Folder" && "and its content"}? This process cannot be undone.
       </div>
       <div className="actions">
         <button onClick={onCancel} className="secondary">

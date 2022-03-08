@@ -1,11 +1,20 @@
-import { useSetRecoilState } from "recoil";
-import { folderDataType, folderState, notesState } from "../recoil/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { updateFolders } from "../APIs/folder";
+import { deleteNoteData } from "../APIs/note";
+import {
+  folderDataType,
+  folderState,
+  notesState,
+  userState,
+} from "../recoil/atoms";
 import { INote } from "../types";
 import { uuidv4 } from "../utils/functions";
 
 export default function useNoteDelete() {
   const setNoteData = useSetRecoilState(notesState);
   const setFolderData = useSetRecoilState(folderState);
+  const [userData] = useRecoilState(userState);
+  const { isLoggedIn } = userData;
 
   function deleteNote(noteId: string, folderId?: string) {
     let notesAfterDeletion: INote[] = [];
@@ -15,23 +24,23 @@ export default function useNoteDelete() {
     console.log({ noteId, folderId });
 
     setNoteData((prev) => {
-      notesAfterDeletion = prev.notes.filter((n) => noteId !== n._id);
+      notesAfterDeletion = prev.notes.filter((n) => noteId !== n.id);
 
       let activeNote = notesAfterDeletion.length
-        ? notesAfterDeletion[0]._id
+        ? notesAfterDeletion[0].id
         : "";
       if (prev.activeNote === noteId) {
         if (prev.notes.length === 1) {
-          const _id = uuidv4();
+          const id = uuidv4();
           const note = {
-            _id,
+            id,
             content: "",
             name: "untitled",
             userId: "",
           };
           notesAfterDeletion.push(note);
-          activeNote = _id;
-          newNoteId = _id;
+          activeNote = id;
+          newNoteId = id;
         }
       }
       return {
@@ -75,6 +84,10 @@ export default function useNoteDelete() {
 
     window.localStorage.setItem("notes", JSON.stringify(notesAfterDeletion));
     window.localStorage.setItem("folders", JSON.stringify(newFolderData));
+    if (isLoggedIn) {
+      updateFolders(newFolderData as folderDataType).then(() => {});
+      deleteNoteData(noteId).then(() => {});
+    }
   }
 
   return deleteNote;

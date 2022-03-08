@@ -1,16 +1,18 @@
 import AuthSection from "./AuthSection";
 import { useRecoilState } from "recoil";
-import { folderState } from "../../recoil/atoms";
+import { folderDataType, folderState, userState } from "../../recoil/atoms";
 import { ReactComponent as NewFileIcon } from "../../icons/new.svg";
 import { ReactComponent as NewFolderIcon } from "../../icons/new-folder.svg";
 import Modal from "../modal";
 import { useState } from "react";
+import DeleteFile from "./file/delete-file";
 import useNoteCreate from "../../hooks/useNoteCreate";
 import File from "./file";
 import { uuidv4 } from "../../utils/functions";
 import Folder from "./folder";
 import "./sidebar.css";
-import DeleteFile from "./file/delete-file";
+import useDBUpdater from "../../hooks/useDBUpdater";
+import { updateFolders } from "../../APIs/folder";
 
 type deleteNoteDataType = {
   id: string;
@@ -26,9 +28,11 @@ function Sidebar() {
   const [deleteNote, setDeleteNote] = useState<deleteNoteDataType>(
     initialDeleteNoteData
   );
+  const [userData] = useRecoilState(userState);
   const createNote = useNoteCreate();
+  useDBUpdater();
   const { noteIds, folders } = folderData;
-  console.log({ folderData });
+  const { isLoggedIn } = userData;
 
   const handleSetDelete = (id: string, folderId?: string) => {
     setDeleteNote({ id, folderId });
@@ -39,18 +43,23 @@ function Sidebar() {
   };
 
   const createNewFolder = () => {
-    setFolderData((prev) => ({
-      ...prev,
-      folders: [
-        {
-          id: uuidv4(),
-          name: "Untitled",
-          noteIds: [],
-          folders: [],
-        },
-        ...prev.folders,
-      ],
-    }));
+    let newFolderData = {} as folderDataType;
+    setFolderData((prev) => {
+      newFolderData = {
+        ...prev,
+        folders: [
+          {
+            id: uuidv4(),
+            name: "Untitled",
+            noteIds: [],
+            folders: [],
+          },
+          ...prev.folders,
+        ],
+      };
+      return newFolderData;
+    });
+    if (isLoggedIn) updateFolders(newFolderData);
   };
 
   return (

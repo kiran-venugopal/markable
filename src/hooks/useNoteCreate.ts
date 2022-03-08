@@ -5,7 +5,7 @@ import {
   initialNoteDataType,
   notesState,
 } from "../recoil/atoms";
-import { IFolder, INote } from "../types";
+import { INote } from "../types";
 import { uuidv4 } from "../utils/functions";
 
 export default function useNoteCreate() {
@@ -13,21 +13,21 @@ export default function useNoteCreate() {
   const setFolderData = useSetRecoilState(folderState);
 
   function createNote(note: Partial<INote>, folderId?: string) {
-    const _id = uuidv4();
+    const id = uuidv4();
     let newNotes: Partial<INote>[] = [],
       newFolderData: Partial<folderDataType> = {};
     setNoteData((prev) => {
       newNotes = [
         {
           ...note,
-          _id,
+          id,
         },
         ...prev.notes,
       ];
       return {
         ...prev,
         notes: newNotes,
-        activeNote: _id,
+        activeNote: id,
       } as initialNoteDataType;
     });
     setFolderData((prev) => {
@@ -36,7 +36,7 @@ export default function useNoteCreate() {
           if (folder.id === folderId) {
             return {
               ...folder,
-              noteIds: [_id, ...folder.noteIds],
+              noteIds: [id, ...folder.noteIds],
             };
           }
           return folder;
@@ -48,7 +48,7 @@ export default function useNoteCreate() {
       } else
         newFolderData = {
           ...prev,
-          noteIds: [_id, ...prev.noteIds],
+          noteIds: [id, ...prev.noteIds],
         };
       return newFolderData as folderDataType;
     });

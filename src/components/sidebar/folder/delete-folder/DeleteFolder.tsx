@@ -1,12 +1,14 @@
-import React from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { updateFolders } from "../../../../APIs/folder";
+import { deleteNoteData } from "../../../../APIs/note";
 import {
+  folderDataType,
   folderState,
-  initialNoteDataType,
   notesState,
+  userState,
 } from "../../../../recoil/atoms";
-import { IFolder } from "../../../../types";
-import DeleteView from "../../delete-view";
+import { IFolder, INote } from "../../../../types";
+import DeleteView from "../../delete-view/DeleteView";
 
 type PropsType = {
   folder: IFolder;
@@ -16,13 +18,17 @@ type PropsType = {
 function DeleteFolder({ folder, onCancel }: PropsType) {
   const setFolderData = useSetRecoilState(folderState);
   const setNotesData = useSetRecoilState(notesState);
+  const [userData] = useRecoilState(userState);
+  const { isLoggedIn } = userData;
 
-  const deleteFolder = () => {
-    let noteIds: string[] = [];
-    let newFolderData;
-    let newNotesData;
+  const hanldeDelete = async () => {
+    let newFolderData = {} as folderDataType;
+    let removedNoteIds: string[] = [];
+    let newNotes: INote[] = [];
     setFolderData((prev) => {
-      noteIds = prev.folders.find((f) => f.id === folder.id)?.noteIds || [];
+      let removedFolder = prev.folders.find((f) => f.id === folder.id);
+      removedNoteIds = removedFolder?.noteIds || [];
+
       newFolderData = {
         ...prev,
         folders: prev.folders.filter((f) => f.id !== folder.id),
@@ -30,23 +36,29 @@ function DeleteFolder({ folder, onCancel }: PropsType) {
       return newFolderData;
     });
     setNotesData((prev) => {
-      newNotesData = prev.notes.filter((note) => !noteIds.includes(note._id));
+      newNotes = prev.notes.filter((note) => !removedNoteIds.includes(note.id));
       return {
         ...prev,
-        notes: newNotesData,
+        notes: newNotes,
       };
     });
-
-    window.localStorage.setItem("notes", JSON.stringify(newNotesData));
+    window.localStorage.setItem("notes", JSON.stringify(newNotes));
     window.localStorage.setItem("folders", JSON.stringify(newFolderData));
+
+    if (isLoggedIn) {
+      updateFolders(newFolderData);
+      for (let i = 0; i < removedNoteIds.length; i++) {
+        await deleteNoteData(removedNoteIds[i]);
+      }
+    }
   };
 
   return (
     <DeleteView
-      name={folder.name}
-      onDelete={deleteFolder}
-      type="Folder"
+      onDelete={hanldeDelete}
       onCancel={onCancel}
+      name={folder.name}
+      type="Folder"
     />
   );
 }

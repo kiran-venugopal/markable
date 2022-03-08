@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import useNoteDelete from "../../../../hooks/useNoteDelete";
 import { notesState } from "../../../../recoil/atoms";
 import { INote } from "../../../../types";
-import DeleteView from "../../delete-view";
+import DeleteView from "../../delete-view/DeleteView";
+import "./delete-file.css";
 
 type PropsType = {
   onCancel(): void;
@@ -17,12 +18,12 @@ function DeleteFile({ onCancel, deleteNoteMeta }: PropsType) {
   const deleteNote = useNoteDelete();
 
   useEffect(() => {
-    const note = notes.find((n) => n._id === deleteNoteMeta.id);
+    const note = notes.find((n) => n.id === deleteNoteMeta.id);
     setNote(note);
   }, []);
 
   const deleteNoteFile = () => {
-    if (note?._id) deleteNote(note._id, deleteNoteMeta.folderId);
+    if (note?.id) deleteNote(note.id, deleteNoteMeta.folderId);
 
     onCancel();
   };
@@ -30,8 +31,8 @@ function DeleteFile({ onCancel, deleteNoteMeta }: PropsType) {
   return (
     <DeleteView
       onDelete={deleteNoteFile}
-      name={`${note?.name}.md`}
       onCancel={onCancel}
+      name={note?.name || ""}
     />
   );
 }

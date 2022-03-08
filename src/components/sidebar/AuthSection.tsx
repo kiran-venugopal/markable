@@ -1,13 +1,12 @@
 import React, { Fragment, MutableRefObject, useRef, useState } from "react";
 import {
-  GoogleLogin,
   GoogleLoginResponse,
-  GoogleLoginResponseOffline,
   useGoogleLogin,
   useGoogleLogout,
 } from "react-google-login";
 import { useRecoilState } from "recoil";
 import useContainerClick from "use-container-click";
+import tokenStorage from "../../APIs/tokenStorage";
 import { userState } from "../../recoil/atoms";
 import Spinner from "../spinner";
 
@@ -45,6 +44,7 @@ function AuthSection() {
       token: user?.tokenId,
       email: user?.profileObj?.email,
     }));
+    tokenStorage.setToken(user.tokenId);
     setIsOpen(false);
   }
 

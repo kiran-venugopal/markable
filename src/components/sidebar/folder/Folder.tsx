@@ -11,12 +11,19 @@ import {
   Fragment,
   MouseEventHandler,
   useEffect,
+  useRef,
   useState,
 } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { folderDataType, folderState, notesState } from "../../../recoil/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  folderDataType,
+  folderState,
+  notesState,
+  userState,
+} from "../../../recoil/atoms";
 import Modal from "../../modal";
-import DeleteFolder from "./delete-folder/DeleteFolder";
+import DeleteFolder from "./delete-folder";
+import { updateFolders } from "../../../APIs/folder";
 
 type PropsType = {
   folder: IFolder;
@@ -34,8 +41,18 @@ export default function Folder({
   const setFolderData = useSetRecoilState(folderState);
   const [deleteFolder, setDeleteFolder] = useState<IFolder>();
 
-  const { activeNote } = useRecoilValue(notesState);
   const [isOpen, setIsOpen] = useState(false);
+  const [noteData] = useRecoilState(notesState);
+  const [userData] = useRecoilState(userState);
+  const { activeNote } = noteData;
+  const { isLoggedIn } = userData;
+  const timerRef = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    if (folder.noteIds.includes(activeNote)) {
+      setIsOpen(true);
+    }
+  }, [activeNote]);
 
   useEffect(() => {
     setIsOpen((prev) => (folder.noteIds.includes(activeNote) ? true : prev));
@@ -58,7 +75,7 @@ export default function Folder({
   };
 
   const changeFolderName = (newName: string) => {
-    let folderData = {};
+    let folderData = {} as folderDataType;
     setFolderData((prev) => {
       folderData = {
         ...prev,
@@ -66,9 +83,14 @@ export default function Folder({
           f.id === folder.id ? { ...f, name: newName } : f
         ),
       };
-      return folderData as folderDataType;
+      return folderData;
     });
     window.localStorage.setItem("folders", JSON.stringify(folderData));
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (isLoggedIn)
+      timerRef.current = setTimeout(() => {
+        updateFolders(folderData);
+      }, 5000);
   };
 
   const handleEmptyName = (eventTarget: EventTarget) => {
@@ -84,7 +106,7 @@ export default function Folder({
     setIsOpen((prev) => !prev);
   };
 
-  const handleRemoveClick = () => {
+  const handleDeleteClick = (folder: IFolder) => {
     setDeleteFolder(folder);
   };
 
@@ -117,9 +139,9 @@ export default function Folder({
             <NewFileIcon width={16} height={16} />
           </button>
           <button
-            className="icon-button"
-            onClick={handleRemoveClick}
-            style={{ marginLeft: "10px" }}
+            style={{ marginLeft: "8px" }}
+            className="icon-button new-file"
+            onClick={() => handleDeleteClick(folder)}
           >
             <RemoveIcon width={16} height={16} />
           </button>
