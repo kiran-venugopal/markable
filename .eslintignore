@@ -1,1 +1,2 @@
-react-hooks/exhaustive-deps
+/* eslint react-hooks/exhaustive-deps: 0 */ 
+node_modules

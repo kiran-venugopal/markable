@@ -55,7 +55,7 @@ body {
 .editor-section {
   height: 100%;
   overflow-y: auto;
-  width: 100%;
+  flex: 1;
 }
 
 button.primary {
@@ -171,4 +171,10 @@ input.edit-name {
 input.edit-name:focus {
   outline: none;
   border-bottom: 1px solid var(--primary);
+}
+
+@media (max-width: 700px) {
+  .editor {
+    padding: 16px 10px 20px 26px;
+  }
 }

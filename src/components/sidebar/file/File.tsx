@@ -32,7 +32,7 @@ function File({ noteId, setDeleteNote, folderId }: PropsType) {
       <div className="icon">
         <MDIcon width={20} height={20} />
       </div>
-      {note?.name}.md
+      <div className="name">{note?.name}.md</div>
       <div className="actions">
         <button
           className="icon-button"

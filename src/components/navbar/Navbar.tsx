@@ -64,14 +64,14 @@ function Navbar() {
             <div className="icon">
               <DoneIcon width={15} height={15} />
             </div>
-            Copied
+            <div className="label">Copied</div>
           </Fragment>
         ) : (
           <Fragment>
             <div className="icon">
               <CopyIcon width={11} height={11} />
             </div>
-            Copy Markdown
+            <div className="label">Copy Markdown</div>
           </Fragment>
         )}
       </button>

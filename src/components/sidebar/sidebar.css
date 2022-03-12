@@ -1,5 +1,4 @@
 .sidebar {
-  min-width: 250px;
   height: 100%;
   background: var(--ternary-background);
   display: flex;
@@ -9,6 +8,7 @@
   -ms-user-select: none;
   user-select: none;
   -o-user-select: none;
+  position: relative;
 }
 
 .sidebar .folders::-webkit-scrollbar {
@@ -41,6 +41,7 @@
   bottom: 12px;
   width: 200px;
   right: -180px;
+  z-index: 20;
 }
 
 img.profile {
@@ -55,6 +56,10 @@ button.secondary.user {
   font-size: 9px;
   padding: 5px;
   align-items: center;
+}
+
+.sidebar button {
+  overflow: hidden;
 }
 
 .user .details {
@@ -85,6 +90,11 @@ button.secondary.user {
   cursor: pointer;
   align-items: center;
 }
+.dir-item .name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .dir-item:hover {
   background: var(--secondary-background);
@@ -102,11 +112,14 @@ button.secondary.user {
 .sidebar-actions {
   display: flex;
   justify-content: flex-end;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .sidebar-actions button {
   margin: 5px;
   padding: 3px 5px;
+  min-width: 25px;
 }
 
 .dir-item .actions {
@@ -122,4 +135,16 @@ button.secondary.user {
 
 .sidebar-actions .icon-button.new-file {
   padding: 2.5px 3px 5px 5px;
+}
+
+@media (max-width: 700px) {
+  .sidebar-actions {
+    margin-right: 20px;
+  }
+  .auth-section button.secondary {
+    min-width: 82px;
+  }
+  .dir-item .actions {
+    margin-right: 10px;
+  }
 }

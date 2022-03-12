@@ -1,0 +1,34 @@
+.resizer {
+  position: absolute;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  background: transparent;
+  transition: background 200ms;
+  cursor: col-resize;
+}
+
+.resizer:hover {
+  background: var(--button-secondary);
+}
+
+.resizer::before {
+  height: 40px;
+  width: 4px;
+  content: "";
+  z-index: 200;
+  display: block;
+  margin: auto;
+  margin-top: 40vh;
+  border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  .resizer::before {
+    background: white;
+  }
+  .resizer {
+    background: var(--button-secondary);
+    width: 16px;
+  }
+}

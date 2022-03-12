@@ -26,3 +26,10 @@
   background: #ac4545;
   margin-left: 10px;
 }
+
+@media (max-width: 700px) {
+  .delete-modal {
+    margin: auto;
+    width: 75%;
+  }
+}

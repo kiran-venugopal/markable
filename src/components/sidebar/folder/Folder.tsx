@@ -132,7 +132,9 @@ export default function Folder({
             onClick={(e) => e.stopPropagation()}
           />
         ) : (
-          <div onClick={onFolderClick}>{folder.name}</div>
+          <div className="name" onClick={onFolderClick}>
+            {folder.name}
+          </div>
         )}
         <div className="actions">
           <button className="icon-button new-file" onClick={handleClick}>

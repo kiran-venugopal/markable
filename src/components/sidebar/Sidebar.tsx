@@ -4,7 +4,7 @@ import { folderDataType, folderState, userState } from "../../recoil/atoms";
 import { ReactComponent as NewFileIcon } from "../../icons/new.svg";
 import { ReactComponent as NewFolderIcon } from "../../icons/new-folder.svg";
 import Modal from "../modal";
-import { useState } from "react";
+import { LegacyRef, MutableRefObject, useRef, useState } from "react";
 import DeleteFile from "./file/delete-file";
 import useNoteCreate from "../../hooks/useNoteCreate";
 import File from "./file";
@@ -13,6 +13,7 @@ import Folder from "./folder";
 import "./sidebar.css";
 import useDBUpdater from "../../hooks/useDBUpdater";
 import { updateFolders } from "../../APIs/folder";
+import Resizer from "./resizer";
 
 type deleteNoteDataType = {
   id: string;
@@ -33,6 +34,7 @@ function Sidebar() {
   useDBUpdater();
   const { noteIds, folders } = folderData;
   const { isLoggedIn } = userData;
+  const siderbarRef = useRef<HTMLDivElement>();
 
   const handleSetDelete = (id: string, folderId?: string) => {
     setDeleteNote({ id, folderId });
@@ -62,8 +64,16 @@ function Sidebar() {
     if (isLoggedIn) updateFolders(newFolderData);
   };
 
+  const getWidth = () => {
+    return parseInt(window.localStorage.getItem("sidebar-width") || "270");
+  };
+
   return (
-    <div className="sidebar">
+    <div
+      style={{ width: `${getWidth()}px` }}
+      className="sidebar"
+      ref={siderbarRef as LegacyRef<HTMLDivElement>}
+    >
       <div className="sidebar-actions">
         <button
           className="icon-button new-folder"
@@ -102,6 +112,7 @@ function Sidebar() {
           deleteNoteMeta={deleteNote}
         />
       </Modal>
+      <Resizer elementRef={siderbarRef as MutableRefObject<HTMLDivElement>} />
     </div>
   );
 }

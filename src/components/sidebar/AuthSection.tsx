@@ -51,7 +51,7 @@ function AuthSection() {
   return (
     <div className="auth-section">
       {loaded ? (
-        <Fragment>
+        <div style={{ overflow: "hidden" }}>
           {isLoggedIn ? (
             <button className="secondary user" onClick={() => setIsOpen(true)}>
               <img className="profile" src={photo} alt={name} />
@@ -65,7 +65,7 @@ function AuthSection() {
               Sign In
             </button>
           )}
-        </Fragment>
+        </div>
       ) : (
         <Spinner type="small" />
       )}
