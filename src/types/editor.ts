@@ -3,6 +3,7 @@ export interface INote {
   userId: string;
   name: string;
   id: string;
+  updatedAt: string;
 }
 
 export interface IFolder {

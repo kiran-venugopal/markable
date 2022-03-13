@@ -90,7 +90,7 @@ export default function Folder({
     if (isLoggedIn)
       timerRef.current = setTimeout(() => {
         updateFolders(folderData);
-      }, 5000);
+      }, 2000);
   };
 
   const handleEmptyName = (eventTarget: EventTarget) => {

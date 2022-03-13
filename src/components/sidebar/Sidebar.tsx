@@ -41,7 +41,12 @@ function Sidebar() {
   };
 
   const createNewFile = () => {
-    createNote({ content: "", name: "untitled", userId: "" });
+    createNote({
+      content: "",
+      name: "untitled",
+      userId: "",
+      updatedAt: new Date().toISOString(),
+    });
   };
 
   const createNewFolder = () => {

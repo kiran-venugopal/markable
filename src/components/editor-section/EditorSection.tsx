@@ -26,6 +26,7 @@ function EditorComponent() {
               id,
               content: "",
               name: "untitled",
+              updatedAt: new Date().toISOString(),
             },
           ];
           return {
@@ -66,7 +67,7 @@ function EditorComponent() {
     <div className="editor-section">
       {note?.id && (
         <Editor
-          key={note.id}
+          key={`${note.id}${noteData.refreshEditor}`}
           defaultValue={note.content}
           onChange={handleEditorChange}
           uploadImage={handleFileUpload}

@@ -18,6 +18,7 @@ export type initialNoteDataType = {
   reload: boolean;
   isLoading: boolean;
   activeNote: string;
+  refreshEditor: string;
 };
 
 export const notesState = atom<initialNoteDataType>({
@@ -27,6 +28,7 @@ export const notesState = atom<initialNoteDataType>({
     reload: false,
     isLoading: true,
     activeNote: "",
+    refreshEditor: "",
   },
 });
 

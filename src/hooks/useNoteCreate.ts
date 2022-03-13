@@ -1,9 +1,12 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { updateFolders } from "../APIs/folder";
+import { updateNoteData } from "../APIs/note";
 import {
   folderDataType,
   folderState,
   initialNoteDataType,
   notesState,
+  userState,
 } from "../recoil/atoms";
 import { INote } from "../types";
 import { uuidv4 } from "../utils/functions";
@@ -11,11 +14,13 @@ import { uuidv4 } from "../utils/functions";
 export default function useNoteCreate() {
   const setNoteData = useSetRecoilState(notesState);
   const setFolderData = useSetRecoilState(folderState);
+  const [{ isLoggedIn }] = useRecoilState(userState);
 
   function createNote(note: Partial<INote>, folderId?: string) {
     const id = uuidv4();
     let newNotes: Partial<INote>[] = [],
       newFolderData: Partial<folderDataType> = {};
+
     setNoteData((prev) => {
       newNotes = [
         {
@@ -55,6 +60,11 @@ export default function useNoteCreate() {
 
     window.localStorage.setItem("notes", JSON.stringify(newNotes));
     window.localStorage.setItem("folders", JSON.stringify(newFolderData));
+
+    if (isLoggedIn) {
+      updateFolders(newFolderData as folderDataType);
+      updateNoteData(id, note);
+    }
   }
 
   return createNote;

@@ -19,6 +19,7 @@ export default function useNoteUpdate() {
           updatedNote = {
             ...n,
             ...note,
+            updatedAt: new Date().toISOString(),
           };
           return updatedNote;
         }

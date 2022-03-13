@@ -37,6 +37,7 @@ export default function useNoteDelete() {
             content: "",
             name: "untitled",
             userId: "",
+            updatedAt: new Date().toISOString(),
           };
           notesAfterDeletion.push(note);
           activeNote = id;

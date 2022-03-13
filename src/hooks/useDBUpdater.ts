@@ -34,11 +34,26 @@ function useDBUpdater() {
           notesNotInDB = prev.notes.filter(
             (note) => !dbNoteIds.includes(note.id)
           );
+          let refreshEditor = prev.refreshEditor;
+          const updatedNotes = prev.notes.map((note) => {
+            const noteObj = notesInDB.find((n: INote) => n.id === note.id);
+            if (noteObj) {
+              const noteDate = new Date(note.updatedAt);
+              const noteObjDate = new Date(noteObj.updatedAt);
+              if (noteObjDate > noteDate) {
+                if (noteObj.id === prev.activeNote)
+                  refreshEditor = Math.random().toString();
+                return noteObj;
+              }
+            }
+            return note;
+          });
 
-          newNotes = [...notesNotInLocal, ...prev.notes];
+          newNotes = [...notesNotInLocal, ...updatedNotes];
           return {
             ...prev,
             notes: newNotes,
+            refreshEditor,
           };
         });
 
