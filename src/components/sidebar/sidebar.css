@@ -11,6 +11,10 @@
   position: relative;
 }
 
+.sidebar .hint {
+  padding: 0 15px;
+}
+
 .sidebar .folders::-webkit-scrollbar {
   background: var(--ternary-background);
   width: 12px;
@@ -27,20 +31,19 @@
   padding: 30px 10px;
   display: flex;
   justify-content: center;
-  box-shadow: -4px -4px 9px var(--shadow-color);
   position: relative;
   text-align: center;
 }
 
 .auth-section .dropdown::after {
-  bottom: 27px;
-  left: -7px;
+  bottom: -8px;
+  left: calc(50% - 12px);
 }
 
 .auth-section .dropdown {
-  bottom: 12px;
+  top: -58px;
   width: 200px;
-  right: -180px;
+  right: calc(50% - 114px);
   z-index: 20;
 }
 

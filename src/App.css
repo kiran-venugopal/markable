@@ -173,6 +173,11 @@ input.edit-name:focus {
   border-bottom: 1px solid var(--primary);
 }
 
+.hint {
+  font-size: 10px;
+  opacity: 0.4;
+}
+
 @media (max-width: 700px) {
   .editor {
     padding: 16px 10px 20px 26px;
