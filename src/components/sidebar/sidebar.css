@@ -12,7 +12,10 @@
 }
 
 .sidebar .hint {
-  padding: 0 15px;
+  margin: 0 15px;
+  overflow: hidden;
+  width: 100%;
+  max-height: 30px;
 }
 
 .sidebar .folders::-webkit-scrollbar {

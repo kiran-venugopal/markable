@@ -35,7 +35,7 @@ export default function useNoteUpdate() {
     if (isLoggedIn)
       timerRef.current = setTimeout(() => {
         updateNoteData(updatedNote.id, updatedNote);
-      }, 5000);
+      }, 2500);
   }
 
   return updateNote;
