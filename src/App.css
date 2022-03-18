@@ -118,7 +118,7 @@ ul.checkbox_list li input {
 .dropdown::after {
   z-index: 1;
   background: var(--background);
-  border-left: 1px solid #232b37;
+  border-right: 1px solid #232b37;
   border-bottom: 1px solid #232b37;
   content: "";
   display: block;
@@ -181,5 +181,8 @@ input.edit-name:focus {
 @media (max-width: 700px) {
   .editor {
     padding: 16px 10px 20px 26px;
+  }
+  ::-webkit-scrollbar {
+    width: 7px;
   }
 }
