@@ -5,6 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import Tracker from "@openreplay/tracker";
+
+const tracker = new Tracker({
+  projectKey: process.env.REACT_APP_OR_KEY || "",
+  __DISABLE_SECURE_MODE: true,
+});
+tracker.start();
 
 ReactDOM.render(
   <RecoilRoot>
