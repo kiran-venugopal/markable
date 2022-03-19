@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { folderDataType, folderState, userState } from "../../recoil/atoms";
 import { ReactComponent as NewFileIcon } from "../../icons/new.svg";
 import { ReactComponent as NewFolderIcon } from "../../icons/new-folder.svg";
+import { ReactComponent as GithubIcon } from "../../icons/github.svg";
 import Modal from "../modal";
 import { LegacyRef, MutableRefObject, useRef, useState } from "react";
 import DeleteFile from "./file/delete-file";
@@ -73,6 +74,10 @@ function Sidebar() {
     return parseInt(window.localStorage.getItem("sidebar-width") || "270");
   };
 
+  const goToGithub = () => {
+    window.open("https://github.com/kiran-venugopal/markable");
+  };
+
   return (
     <div
       style={{ width: `${getWidth()}px` }}
@@ -80,20 +85,26 @@ function Sidebar() {
       ref={siderbarRef as LegacyRef<HTMLDivElement>}
     >
       <div className="sidebar-actions">
-        <button
-          className="icon-button new-folder"
-          title="new folder"
-          onClick={createNewFolder}
-        >
-          <NewFolderIcon width={17} height={17} />
+        <button onClick={goToGithub} className="icon-button github">
+          <GithubIcon />
         </button>
-        <button
-          className="icon-button new-file"
-          onClick={createNewFile}
-          title="new file"
-        >
-          <NewFileIcon width={17} height={17} />
-        </button>
+
+        <div style={{ display: "flex" }}>
+          <button
+            className="icon-button new-folder"
+            title="new folder"
+            onClick={createNewFolder}
+          >
+            <NewFolderIcon width={17} height={17} />
+          </button>
+          <button
+            className="icon-button new-file"
+            onClick={createNewFile}
+            title="new file"
+          >
+            <NewFileIcon width={17} height={17} />
+          </button>
+        </div>
       </div>
       <div className="folders">
         {folders.map((folder) => (

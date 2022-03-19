@@ -128,6 +128,10 @@ button.secondary.user {
   min-width: 25px;
 }
 
+.sidebar-actions button.github {
+  margin-right: 30px;
+}
+
 .dir-item .actions {
   display: none;
   flex: 1;
