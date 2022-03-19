@@ -10,8 +10,6 @@ const GuardedRoute = ({
   ...rest
 }) => {
   function renderComponent(props) {
-    console.log({ rest });
-
     if (isAuthenticated) {
       if (unAuthorizedOnly) return <Redirect to={redirectPath} />;
       return <Component {...props} />;

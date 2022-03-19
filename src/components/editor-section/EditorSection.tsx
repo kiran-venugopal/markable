@@ -64,7 +64,7 @@ function EditorComponent() {
   };
 
   return (
-    <div className="editor-section">
+    <div spellCheck={false} className="editor-section">
       {note?.id && (
         <Editor
           key={`${note.id}${noteData.refreshEditor}`}

@@ -17,7 +17,7 @@ function Navbar() {
 
   const handleCopy = () => {
     setIsCopied(true);
-    navigator.clipboard.writeText(note?.content || "");
+    navigator.clipboard.writeText(note?.content.replace(/\\/g, "") || "");
     setTimeout(() => setIsCopied(false), 4000);
   };
 

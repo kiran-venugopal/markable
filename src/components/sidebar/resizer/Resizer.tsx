@@ -1,10 +1,4 @@
-import {
-  MouseEventHandler,
-  MutableRefObject,
-  TouchEventHandler,
-  useEffect,
-  useRef,
-} from "react";
+import { MouseEventHandler, MutableRefObject, useEffect, useRef } from "react";
 import "./resizer.css";
 
 type PropsType = {
@@ -17,38 +11,41 @@ function Resizer({ elementRef }: PropsType) {
 
   const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
-    console.log("clicked", statusRef);
+
     statusRef.current.isClicked = !statusRef.current.isClicked;
   };
 
-  const getWidth = (pageX: number) => {
-    if (window.innerWidth <= 800) {
-      return pageX <= 16 ? 16 : pageX;
-    } else return pageX <= 100 ? 100 : pageX;
+  const updateResizer = (pageX: number) => {
+    const getWidth = (pageX: number) => {
+      if (window.innerWidth <= 800) {
+        return pageX <= 16 ? 16 : pageX;
+      } else return pageX <= 100 ? 100 : pageX;
+    };
+
+    if (statusRef.current.isClicked) {
+      const newWidth = getWidth(pageX);
+
+      elementRef.current.style.width = `${newWidth}px`;
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(
+        () =>
+          window.localStorage.setItem(
+            "sidebar-width",
+            JSON.stringify(newWidth)
+          ),
+        1000
+      );
+    }
   };
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       // console.log(statusRef.current.startX, e.pa);
-      if (statusRef.current.isClicked) {
-        const newWidth = getWidth(e.pageX);
-        console.log(newWidth, window.innerWidth);
-        elementRef.current.style.width = `${newWidth}px`;
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(
-          () =>
-            window.localStorage.setItem(
-              "sidebar-width",
-              JSON.stringify(newWidth)
-            ),
-          1000
-        );
-      }
+      updateResizer(e.pageX);
     };
 
     const handleDocClick = (e: MouseEvent) => {
       if (statusRef.current.isClicked) {
-        console.log("removed");
         statusRef.current.isClicked = false;
       }
     };
@@ -68,24 +65,11 @@ function Resizer({ elementRef }: PropsType) {
       onMouseDown={handleMouseDown}
       className="resizer"
       onTouchStart={() => {
-        console.log("start");
         statusRef.current.isClicked = !statusRef.current.isClicked;
       }}
       onTouchMove={(e) => {
         e.stopPropagation();
-        if (statusRef.current.isClicked) {
-          const newWidth = getWidth(e.touches[0].pageX);
-          elementRef.current.style.width = `${newWidth}px`;
-          if (timerRef.current) clearTimeout(timerRef.current);
-          timerRef.current = setTimeout(
-            () =>
-              window.localStorage.setItem(
-                "sidebar-width",
-                JSON.stringify(newWidth)
-              ),
-            1000
-          );
-        }
+        updateResizer(e.touches[0].pageX);
       }}
       onTouchEnd={(e) => (statusRef.current.isClicked = false)}
     ></div>
