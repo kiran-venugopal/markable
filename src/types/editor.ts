@@ -11,4 +11,5 @@ export interface IFolder {
   noteIds: string[];
   folders: IFolder[];
   id: string;
+  updatedAt: string;
 }

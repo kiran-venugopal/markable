@@ -62,11 +62,28 @@ function useDBUpdater() {
         const folderResponse = await fetchFolders();
         if (folderResponse.success) {
           let newFolderData: Partial<folderDataType> = {};
+          let updatedPrevFolders: IFolder[] = [];
+
           const foldersInDB = folderResponse.folders || [];
           const fNotesInDB = folderResponse.noteIds || [];
 
           setFolderData((prev) => {
-            const folderIds = prev.folders.map((folder) => folder.id);
+            const folderIds = prev.folders.map((folder) => {
+              const existInDB = foldersInDB.find(
+                (f: IFolder) => f.id === folder.id
+              );
+
+              // when a note exist in both db and local storage
+              if (existInDB) {
+                console.log("folder found", existInDB);
+                const folderDate = new Date(folder.updatedAt);
+                const dbFolderDate = new Date(existInDB.updatedAt);
+                if (dbFolderDate > folderDate)
+                  updatedPrevFolders.push(existInDB);
+                else updatedPrevFolders.push(folder);
+              } else updatedPrevFolders.push(folder);
+              return folder.id;
+            });
             const foldersNotInLocal = foldersInDB.filter(
               (folder: IFolder) => !folderIds.includes(folder.id)
             );
@@ -76,7 +93,7 @@ function useDBUpdater() {
 
             newFolderData = {
               ...prev,
-              folders: [...foldersNotInLocal, ...prev.folders],
+              folders: [...foldersNotInLocal, ...updatedPrevFolders],
               noteIds: [...noteIdsNotInLocal, ...prev.noteIds],
             };
 

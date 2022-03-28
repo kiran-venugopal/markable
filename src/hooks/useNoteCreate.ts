@@ -42,6 +42,7 @@ export default function useNoteCreate() {
             return {
               ...folder,
               noteIds: [id, ...folder.noteIds],
+              updatedAt: new Date().toISOString(),
             };
           }
           return folder;

@@ -61,6 +61,7 @@ function Sidebar() {
             name: "Untitled",
             noteIds: [],
             folders: [],
+            updatedAt: new Date().toISOString(),
           },
           ...prev.folders,
         ],
