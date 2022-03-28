@@ -39,11 +39,16 @@ function Navbar() {
         <Logo width={25} height={25} />
       </div>
       {note?.id && (
-        <div className="file-name" onClick={() => setEditMode(true)}>
+        <div
+          data-testid="file-name-label"
+          className="file-name"
+          onClick={() => setEditMode(true)}
+        >
           {editMode ? (
             <input
               type="text"
               className="edit-name"
+              data-testid="file-name-input"
               value={note?.name}
               autoFocus
               onFocus={(e) => e.target.select()}

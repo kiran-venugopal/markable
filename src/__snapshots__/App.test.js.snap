@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="App"
+  >
+    <div
+      class="navbar"
+    >
+      <div
+        class="logo"
+      >
+        <svg
+          height="25"
+          width="25"
+        >
+          logo.svg
+        </svg>
+      </div>
+      <div
+        class="file-name"
+        data-testid="file-name-label"
+      >
+        untitled.md
+      </div>
+      <button
+        class="primary"
+      >
+        <div
+          class="icon"
+        >
+          <svg
+            height="11"
+            width="11"
+          >
+            copy.svg
+          </svg>
+        </div>
+        <div
+          class="label"
+        >
+          Copy Markdown
+        </div>
+      </button>
+    </div>
+    <div
+      class="editor-container"
+    >
+      <div
+        class="sidebar"
+        style="width: 270px;"
+      >
+        <div
+          class="sidebar-actions"
+        >
+          <button
+            class="icon-button github"
+          >
+            <svg>
+              github.svg
+            </svg>
+          </button>
+          <div
+            style="display: flex;"
+          >
+            <button
+              class="icon-button new-folder"
+              title="new folder"
+            >
+              <svg
+                height="17"
+                width="17"
+              >
+                new-folder.svg
+              </svg>
+            </button>
+            <button
+              class="icon-button new-file"
+              title="new file"
+            >
+              <svg
+                height="17"
+                width="17"
+              >
+                new.svg
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="folders"
+        >
+          <div
+            class="dir-item active"
+          >
+            <div
+              class="icon"
+            >
+              <svg
+                height="20"
+                width="20"
+              >
+                md.svg
+              </svg>
+            </div>
+            <div
+              class="name"
+            >
+              untitled.md
+            </div>
+            <div
+              class="actions"
+            >
+              <button
+                class="icon-button"
+              >
+                <svg
+                  height="18"
+                  width="18"
+                >
+                  remove.svg
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="auth-section"
+        >
+          <div
+            style="overflow: hidden;"
+          >
+            <button
+              class="secondary"
+            >
+              Sign In
+            </button>
+          </div>
+        </div>
+        <div
+          class="resizer"
+        />
+      </div>
+      <div
+        class="editor-section"
+        spellcheck="false"
+      >
+        <div
+          class="sc-bdvvtL bMzWfw editor"
+          dir="auto"
+        >
+          <div
+            class="sc-dJjYzT klaQDU"
+            dir="auto"
+          >
+            <div
+              class="ProseMirror"
+              contenteditable="true"
+              role="textbox"
+            >
+              <button
+                class="block-menu-trigger ProseMirror-widget"
+                type="button"
+              >
+                <svg
+                  fill="currentColor"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  width="24px"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13,11 L13,6 C13,5.44771525 12.5522847,5 12,5 C11.4477153,5 11,5.44771525 11,6 L11,6 L11,11 L6,11 C5.44771525,11 5,11.4477153 5,12 C5,12.5522847 5.44771525,13 6,13 L11,13 L11,18 C11,18.5522847 11.4477153,19 12,19 C12.5522847,19 13,18.5522847 13,18 L13,13 L18,13 C18.5522847,13 19,12.5522847 19,12 C19,11.4477153 18.5522847,11 18,11 L13,11 Z"
+                  />
+                </svg>
+              </button>
+              <p
+                class="placeholder"
+                data-empty-text="Write something nice…"
+              >
+                <br />
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

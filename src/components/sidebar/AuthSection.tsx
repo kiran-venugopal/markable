@@ -73,7 +73,12 @@ function AuthSection() {
       <div style={{ overflow: "hidden" }}>
         {isLoggedIn ? (
           <button className="secondary user" onClick={() => setIsOpen(true)}>
-            <img className="profile" src={photo} alt={name} />
+            <img
+              referrerPolicy="no-referrer"
+              className="profile"
+              src={photo}
+              alt={name}
+            />
             <div className="details">
               <div className="name">{name}</div>
               <div className="email">{email}</div>

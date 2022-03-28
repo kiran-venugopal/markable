@@ -80,7 +80,9 @@ export default function Folder({
       folderData = {
         ...prev,
         folders: prev.folders.map((f) =>
-          f.id === folder.id ? { ...f, name: newName } : f
+          f.id === folder.id
+            ? { ...f, name: newName, updatedAt: new Date().toISOString() }
+            : f
         ),
       };
       return folderData;
