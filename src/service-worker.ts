@@ -20,6 +20,7 @@ clientsClaim();
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
 
+
 // @ts-expect-error ts-migrate(2339) FIXME: Property '__WB_MANIFEST' does not exist on type 'W... Remove this comment to see the full error message
 precacheAndRoute(self.__WB_MANIFEST);
 
@@ -68,6 +69,7 @@ registerRoute(
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
+
 
     // @ts-expect-error ts-migrate(2339) FIXME: Property 'skipWaiting' does not exist on type 'Win... Remove this comment to see the full error message
     self.skipWaiting();
