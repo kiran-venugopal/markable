@@ -19,8 +19,10 @@ ReactDOM.render(<App />, document.getElementById("root"));
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 
 
+
 // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
 reportWebVitals();
+
 
 
 // @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
