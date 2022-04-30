@@ -1,5 +1,7 @@
+
 // @ts-expect-error ts-migrate(2307) FIXME: Cannot find module './components/Note/Notes' or it... Remove this comment to see the full error message
 import Notes from "./components/Note/Notes";
+
 // @ts-expect-error ts-migrate(2307) FIXME: Cannot find module './components/Todo/Todos' or it... Remove this comment to see the full error message
 import Todos from "./components/Todo/Todos";
 
