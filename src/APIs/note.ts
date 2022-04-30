@@ -11,7 +11,7 @@ export async function fetchNotes() {
   }
 }
 
-export async function createNote(note) {
+export async function createNote(note: any) {
   try {
     const res = await axiosInstance.post(`${baseUrl}/create-note`, note);
     return res.data || {};
@@ -21,7 +21,7 @@ export async function createNote(note) {
   }
 }
 
-export async function updateNoteData(noteId, note) {
+export async function updateNoteData(noteId: any, note: any) {
   try {
     const res = await axiosInstance.post(
       `${baseUrl}/update-note?id=${noteId}`,
@@ -34,7 +34,7 @@ export async function updateNoteData(noteId, note) {
   }
 }
 
-export async function updateLayouts(layouts) {
+export async function updateLayouts(layouts: any) {
   try {
     const res = await axiosInstance.post(`${baseUrl}/update-layouts`, layouts);
     return res.data || {};
@@ -44,7 +44,7 @@ export async function updateLayouts(layouts) {
   }
 }
 
-export async function deleteNoteData(noteId) {
+export async function deleteNoteData(noteId: any) {
   try {
     const res = await axiosInstance.delete(
       `${baseUrl}/delete-note?id=${noteId}`

@@ -1,3 +1,4 @@
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'styl... Remove this comment to see the full error message
 import styled from "styled-components";
 
 export const StyledAppContainer = styled.div`
@@ -30,7 +31,7 @@ export const Button = styled.button`
   border: none;
   padding: 5px;
   margin: 10px;
-  color: ${(props) => (props.mode === "danger" ? "white" : "#484848")};
+  color: ${(props: any) => props.mode === "danger" ? "white" : "#484848"};
   outline: none;
   background: #ff4886;
   font-weight: 600;
